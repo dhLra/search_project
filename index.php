@@ -20,10 +20,9 @@
     <div class="row justify-content-center align-items-center">
       <div class="col col-md-8 col-lg-6">
         <img class="img-fluid" src="img/logo_1.png">
-        <form action="/connection.php" method="POST">
+        <form action="/turing-fbr/connection.php" method="POST">
           <div class="row">
             <div class="col-12">
-              <img class="img-fluid" src="img/logo_1.png">
               <input type="text" name="param" id="busca" class="form-control" placeholder="Informe os dados aqui">
             </div>
             <div class="col-12">
