@@ -2,7 +2,21 @@ body,html{
     margin: 0;
     padding: 0;
     font-size: 16px;
-    background:#5E5E5E
+    min-height: 100vh;
+    background:#5E5E5E;
+}
+
+body {
+  background-image: url(/img/mapa.png);
+  background-repeat: no-repeat;
+  background-position: 95% 100px;
+  background-size: 40%;
+}
+@media screen and (max-width: 701px) {
+  body {
+    background-position: 0px 60px;
+    background-size: 200%;
+  }
 }
 
 .navbar{
@@ -13,17 +27,17 @@ body,html{
     padding-top: 100px;
 }
 
-.btn{
+.btn:not(.normal) {
     background-color: darkorange;
     border-color: darkorange;
     margin-top: 2%;
 }
-.btn:hover{
+.btn:not(.normal):hover{
     background-color: orange;
     border-color: orange;
 }
 
-.btn:active{
+.btn:not(.normal):active{
     background-color: orange;
 }
 
