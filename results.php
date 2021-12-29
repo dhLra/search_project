@@ -17,7 +17,7 @@
 
 <?php include_once "header.php"?>
 
-    <div class="container result">
+    <div class="container">
         <div class="row justify-content-center aling-itens-center">
             <div class="col-4" style="text-align: right;">
                 <img src="img/logo_3.png" alt="" style="max-width: 100%;">

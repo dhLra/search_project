@@ -49,3 +49,15 @@ body {
 .form-control{
     margin-top: 15px;
 }
+
+.statistics {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 701px) {
+  .statistics {
+    max-height: unset;
+  }
+}

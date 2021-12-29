@@ -1,3 +1,6 @@
+<?php
+    require __DIR__ . '/statistics.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -17,13 +20,12 @@
   <?php include_once "header.php" ?>
 
   <div class="container front-form">
-    <div class="row justify-content-center align-items-center">
-      <div class="col col-md-8 col-lg-6">
+    <div class="row">
+      <div class="col col-md-6 col-lg-6">
         <img class="img-fluid" src="img/logo_1.png">
         <form action="/connection.php" method="POST">
           <div class="row">
             <div class="col-12">
-              <img class="img-fluid" src="img/logo_1.png">
               <input type="text" name="param" id="busca" class="form-control" placeholder="Informe os dados aqui">
             </div>
             <div class="col-12">
@@ -43,6 +45,37 @@
             </div>
           </div>
         </form>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col col-md-6 col-lg-6">
+        <div class="bg-light statistics">
+          <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th scope="row">Total de provedores</th>
+                  <td><?php echo $statistics['total']; ?></td>
+                </tr>
+              </tbody>
+          </table>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Cidade</th>
+                <th scope="col">Total de provedores</th>
+              </tr>
+            </thead
+            <tbody>
+              <?php foreach($statistics['by_city'] as $row): ?>
+                <tr>
+                  <td><?php echo $row['cidade']; ?></td>
+                  <td><?php echo $row['total']; ?></td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
