@@ -23,7 +23,7 @@
     <div class="row">
       <div class="col col-md-5 col-lg-5">
         <img class="img-fluid" src="img/logo_1.png">
-        <form action="/connection.php" method="POST">
+        <form action="/turing-fbr/connection.php" method="POST">
           <div class="row">
             <div class="col-12">
               <input type="text" name="param" id="busca" class="form-control" placeholder="Informe os dados aqui">
