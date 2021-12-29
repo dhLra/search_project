@@ -1,9 +1,9 @@
 <?php
 
-$hostName = "localhost";
-$dbName = "provedores";
-$dbLogin = "root";
-$dbPass = "";
+$hostName = "127.0.0.1";
+$dbName = "adabd";
+$dbLogin = "adabduser";
+$dbPass = "hightechsinuca1337";
 
 try {
     $conn = new pdo('mysql:host=' . $hostName . '; dbname=' . $dbName, $dbLogin, $dbPass);
@@ -14,9 +14,10 @@ try {
 if (isset($_POST['submit'])) {
     $paremetro = ($_POST['param']);
     $tipo = ($_POST['type']);
+    // Resultados da busca
+    $result = []; 
 
     switch ($tipo) {
-
         case 0:
             $nome = "%" . $paremetro . "%";
             $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `ASN` LIKE :nome');
@@ -24,8 +25,8 @@ if (isset($_POST['submit'])) {
             $sth->execute();
 
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            echo "<pre>";
-            print_r($result);
+            
+            
             break;
 
         case 1:
@@ -35,8 +36,8 @@ if (isset($_POST['submit'])) {
             $sth->execute();
 
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            echo "<pre>";
-            print_r($result);
+            
+            
             break;
 
         case 2:
@@ -46,8 +47,8 @@ if (isset($_POST['submit'])) {
             $sth->execute();
 
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            echo "<pre>";
-            print_r($result);
+            
+            
             break;
 
         case 3:
@@ -57,8 +58,8 @@ if (isset($_POST['submit'])) {
             $sth->execute();
 
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            echo "<pre>";
-            print_r($result);
+            
+            
             break;
 
         case 4:
@@ -67,13 +68,9 @@ if (isset($_POST['submit'])) {
             $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
             $sth->execute();
 
-           foreach($sth as $row){
-                echo "<button></button>";
-            }
-            
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            echo "<pre>";
-            print_r($result);
+            
+            
             break;
 
         case 5:
@@ -83,8 +80,8 @@ if (isset($_POST['submit'])) {
             $sth->execute();
 
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            echo "<pre>";
-            print_r($result);
+            
+            
             break;
 
         case 6:
@@ -94,10 +91,12 @@ if (isset($_POST['submit'])) {
             $sth->execute();
 
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            echo "<pre>";
-            print_r($result);
+            
+            
             break;
     }
+
+    require __DIR__ . '/results.php';
 }
 
 /*
@@ -107,8 +106,8 @@ $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
 $sth->execute();
 
 $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-echo "<pre>";
-print_r($result);
+
+
 exit;
 */
 ?>

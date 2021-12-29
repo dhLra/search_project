@@ -49,11 +49,11 @@
     <div class="container result">
         <div class="row aling-itens-center">
             <div class="d-grid col-12 mx-auto">
-                <?php 
-                
-                while ($results = PDO)
-
-                ?>
+                <?php foreach($result as $row): ?>
+                    <div class="row bg-light m-2">
+                        <p class="text-dark"><?php echo $row['Nome_Fantasia']; ?></p>
+                    </div>
+                <?php endforeach ?>
                 <!-- <button class="btn btn-primary" type="button">Nome do provedor<i class="fas fa-comment-alt"></i></button> -->
             </div>
         </div>
