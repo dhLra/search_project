@@ -54,7 +54,10 @@
             <div class="d-grid col-12 mx-auto">
                 <?php foreach($result as $row): ?>
                     <div class="row bg-light m-2">
-                        <p class="text-dark"><?php echo $row['Nome_Fantasia']; ?></p>
+                        <form action="/provider_info.php" method="post" target="_blank">
+                            <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
+                            <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['Nome_Fantasia']; ?></button>
+                        </form>
                     </div>
                 <?php endforeach ?>
                 <!-- <button class="btn btn-primary" type="button">Nome do provedor<i class="fas fa-comment-alt"></i></button> -->

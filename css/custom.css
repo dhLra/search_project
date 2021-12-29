@@ -27,17 +27,17 @@ body {
     padding-top: 100px;
 }
 
-.btn{
+.btn:not(.normal) {
     background-color: darkorange;
     border-color: darkorange;
     margin-top: 2%;
 }
-.btn:hover{
+.btn:not(.normal):hover{
     background-color: orange;
     border-color: orange;
 }
 
-.btn:active{
+.btn:not(.normal):active{
     background-color: orange;
 }
 
