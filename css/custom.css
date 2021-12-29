@@ -1,0 +1,37 @@
+body,html{
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    background:#5E5E5E
+}
+
+.navbar{
+    background-color: orange;
+ }
+
+.front-form{
+    padding-top: 100px;
+}
+
+.btn{
+    background-color: darkorange;
+    border-color: darkorange;
+    margin-top: 2%;
+}
+.btn:hover{
+    background-color: orange;
+    border-color: orange;
+}
+
+.btn:active{
+    background-color: orange;
+}
+
+.result{
+    height: 100px;
+    padding-top: 65px;
+}
+
+.form-control{
+    margin-top: 15px;
+}
