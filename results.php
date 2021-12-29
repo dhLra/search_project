@@ -17,7 +17,7 @@
 
 <?php include_once "header.php"?>
 
-    <div class="container result">
+    <div class="container">
         <div class="row justify-content-center aling-itens-center">
             <div class="col-4" style="text-align: right;">
                 <img src="img/logo_3.png" alt="" style="max-width: 100%;">
@@ -35,7 +35,7 @@
             <div class="d-grid col-12 mx-auto">
                 <?php foreach($result as $row): ?>
                     <div class="row bg-light m-2">
-                        <form action="/provider_info.php" method="post" target="_blank">
+                        <form action="/turing-fbr/result_provider.php" method="post" target="_blank">
                             <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
                             <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['Nome_Fantasia']; ?></button>
                         </form>

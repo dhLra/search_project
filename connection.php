@@ -1,9 +1,9 @@
 <?php
 
 $hostName = "127.0.0.1";
-$dbName = "adabd";
-$dbLogin = "adabduser";
-$dbPass = "hightechsinuca1337";
+$dbName = "provedores";
+$dbLogin = "root";
+$dbPass = "";
 
 try {
     $conn = new pdo('mysql:host=' . $hostName . '; dbname=' . $dbName, $dbLogin, $dbPass);
@@ -106,6 +106,7 @@ if (isset($_POST['submit'])) {
     }
 
     require __DIR__ . '/results.php';
+    require __DIR__ . '/result_provider.php';
 }
 
 /*
