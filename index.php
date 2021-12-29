@@ -21,7 +21,7 @@
 
   <div class="container front-form">
     <div class="row">
-      <div class="col col-md-6 col-lg-6">
+      <div class="col col-md-5 col-lg-5">
         <img class="img-fluid" src="img/logo_1.png">
         <form action="/connection.php" method="POST">
           <div class="row">
@@ -48,7 +48,7 @@
       </div>
     </div>
     <div class="row mt-4">
-      <div class="col col-md-6 col-lg-6">
+      <div class="col col-md-5 col-lg-5">
         <div class="bg-light statistics">
           <table class="table table-bordered">
               <tbody>
@@ -63,7 +63,7 @@
             <thead>
               <tr>
                 <th scope="col">Cidade</th>
-                <th scope="col">Total de provedores</th>
+                <th scope="col">Provedores</th>
               </tr>
             </thead
             <tbody>
