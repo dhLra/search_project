@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
     }
 
     require __DIR__ . '/results.php';
-    require __DIR__ . '/result_provider.php';
+    /* require __DIR__ . '/result_provider.php'; */
 }
 
 /*
