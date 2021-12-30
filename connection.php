@@ -1,15 +1,6 @@
 <?php
 
-$hostName = "127.0.0.1";
-$dbName = "provedores";
-$dbLogin = "root";
-$dbPass = "";
-
-try {
-    $conn = new pdo('mysql:host=' . $hostName . '; dbname=' . $dbName, $dbLogin, $dbPass);
-} catch (PDOException $e) {
-    echo "Erro foi " . $e->getMessage();
-}
+require __DIR__ . "/database.php";
 
 if (isset($_POST['submit'])) {
     $paremetro = ($_POST['param']);
@@ -106,7 +97,7 @@ if (isset($_POST['submit'])) {
     }
 
     require __DIR__ . '/results.php';
-    require __DIR__ . '/result_provider.php';
+    /* require __DIR__ . '/result_provider.php'; */
 }
 
 /*
