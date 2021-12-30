@@ -24,12 +24,12 @@ body {
  }
 
 .front-form{
-    padding-top: 100px;
+    padding-top: 80px;
 }
 
 .btn:not(.normal) {
-    background-color: darkorange;
-    border-color: darkorange;
+    background-color: #FE6B01;
+    border-color: #FE6B01;
     margin-top: 2%;
 }
 .btn:not(.normal):hover{
@@ -46,6 +46,23 @@ body {
     padding-top: 65px;
 }
 
-.form-control{
-    margin-top: 15px;
+.statistics {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 701px) {
+  .statistics {
+    max-height: unset;
+  }
+}
+
+.table td {
+  word-break: break-all;
+}
+
+.table th {
+  max-width: 250px;
+  word-break: break-word;
 }

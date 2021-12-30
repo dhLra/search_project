@@ -1,14 +1,5 @@
 <?php
-$hostName = "127.0.0.1";
-$dbName = "provedores";
-$dbLogin = "root";
-$dbPass = "";
-
-try {
-    $conn = new pdo('mysql:host=' . $hostName . '; dbname=' . $dbName, $dbLogin, $dbPass);
-} catch (PDOException $e) {
-    echo "Erro foi " . $e->getMessage();
-}
+require __DIR__ . "/database.php";
 
 $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `id` = :nome');
 $sth->bindParam(':nome', $_POST['provider']);
@@ -112,7 +103,7 @@ $result = $sth->fetch(PDO::FETCH_ASSOC);
                 <tr>
                     <th scope="row">Processo:</th>
                     <td>
-                    <?php echo $result["Processo"]; ?>
+                    <?php echo str_replace(",", ".", number_format(intval(str_replace(",", ".", $result["Processo"])), 0)); ?>
                     </td>
                 </tr>
                 <tr>
