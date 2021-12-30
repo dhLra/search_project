@@ -27,7 +27,7 @@
             <div class="col-12">
               <input type="text" name="param" id="busca" class="form-control" placeholder="Informe os dados aqui">
             </div>
-            <div class="col-12">
+            <div class="col-12 pt-2">
               <select class="form-select" arial-label="Default select exemple" name="type">
                 <option>Escolha o tipo</option>
                 <option value="0">ASN</option>
