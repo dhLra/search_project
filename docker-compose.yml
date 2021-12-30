@@ -1,0 +1,53 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docker/etc/apache2/sites-enabled/:/etc/apache2/sites-enabled/
+      - ./docker/etc/apache2/envvars:/etc/apache2/envvars
+      - ./docker/etc/php/7.3/apache2/php.ini:/etc/php/7.3/apache2/php.ini
+      - ./:/app/code/
+      - ./docker/logs/:/app/logs/
+      - /etc/localtime:/etc/localtime:ro
+    stdin_open: true
+    tty: true
+    depends_on:
+      database:
+        condition: service_healthy
+  database:
+    image: bitnami/mariadb:10.4.19
+    user: "0:0"
+    environment:
+      MARIADB_ROOT_PASSWORD: "GDS3243!sdfN"
+      MARIADB_DATABASE: provedores
+      MARIADB_USER: mvp
+      MARIADB_PASSWORD: fir3link4
+      MARIADB_COLLATE: utf8_unicode_ci
+    volumes:
+      - ./docker/database:/bitnami/mariadb
+    healthcheck:
+      test: ["CMD", "mysqladmin",
+                    "-h",
+                    "localhost",
+                    "-umvp",
+                    "-pfir3link4",
+                    "processlist"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+  pma:
+    image: phpmyadmin
+    # ports:
+    #   - '8081:80'
+    environment:
+      PMA_HOST: database
+      PMA_USER: adabduser
+      PMA_PASSWORD: hightechsinuca1337
+      UPLOAD_LIMIT: 300M
+    depends_on:
+      database:
+        condition: service_healthy
