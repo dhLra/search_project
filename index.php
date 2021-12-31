@@ -45,6 +45,24 @@
               <button type="submit" name="submit" class="btn btn-primary btn-search w-100">Buscar</button>
             </div>
           </div>
+
+          <datalist id="cities">
+            <?php foreach (getAllCities() as $row): ?>
+                <option value="<?php echo $row['cidade']; ?>" >
+            <?php endforeach ?>
+          </datalist>
+
+          <datalist id="providers">
+            <?php foreach (getAllProviders() as $row): ?>
+                <option value="<?php echo $row['nome']; ?>" >
+            <?php endforeach ?>
+          </datalist>
+
+          <datalist id="razao-social">
+            <?php foreach (getAllProvidersRazaoSocial() as $row): ?>
+                <option value="<?php echo $row['nome']; ?>" >
+            <?php endforeach ?>
+          </datalist>
         </form>
       </div>
     </div>
@@ -99,7 +117,8 @@
   </div>
 </body>
 
-<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
 <script src="https://kit.fontawesome.com/afc7c9c072.js" crossorigin="anonymous"></script>
 
 </html>
