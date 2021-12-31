@@ -7,7 +7,7 @@ body,html{
 }
 
 body {
-  background-image: url(/turing-fbr/img/mapa.png);
+  background-image: url(/img/mapa.png);
   background-repeat: no-repeat;
   background-position: 95% 100px;
   background-size: 40%;
@@ -44,6 +44,27 @@ body {
 .result{
     height: 100px;
     padding-top: 65px;
+}
+
+.statistics {
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+@media screen and (max-width: 701px) {
+  .statistics {
+    max-height: unset;
+  }
+}
+
+.table td {
+  word-break: break-all;
+}
+
+.table th {
+  max-width: 250px;
+  word-break: break-word;
 }
 
 .statistics {

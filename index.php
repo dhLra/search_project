@@ -22,7 +22,7 @@
     <div class="row">
       <div class="col col-md-5 col-lg-5">
         <img class="img-fluid" src="img/logo_1.png">
-        <form action="/turing-fbr/connection.php" method="POST">
+        <form action="/connection.php" method="POST">
           <div class="row">
             <div class="col-12">
               <input type="text" name="param" id="busca" class="form-control" placeholder="Informe os dados aqui">
@@ -33,9 +33,11 @@
                 <option value="0">ASN</option>
                 <option value="1">CNPJ/CPF</option>
                 <option value="2">Razão Social</option>
+                <option value="7">Nome fantasia</option>
                 <option value="3">Serviço</option>
                 <option value="4">Municipio</option>
                 <option value="5">UF</option>
+                <option value="8">Região</option>
                 <option value="6">CEP</option>
               </select>
             </div>
@@ -43,6 +45,24 @@
               <button type="submit" name="submit" class="btn btn-primary btn-search w-100">Buscar</button>
             </div>
           </div>
+
+          <datalist id="cities">
+            <?php foreach (getAllCities() as $row): ?>
+                <option value="<?php echo $row['cidade']; ?>" >
+            <?php endforeach ?>
+          </datalist>
+
+          <datalist id="providers">
+            <?php foreach (getAllProviders() as $row): ?>
+                <option value="<?php echo $row['nome']; ?>" >
+            <?php endforeach ?>
+          </datalist>
+
+          <datalist id="razao-social">
+            <?php foreach (getAllProvidersRazaoSocial() as $row): ?>
+                <option value="<?php echo $row['nome']; ?>" >
+            <?php endforeach ?>
+          </datalist>
         </form>
       </div>
     </div>
@@ -61,14 +81,31 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">Cidade</th>
+                <th scope="col">Região</th>
                 <th scope="col">Provedores</th>
               </tr>
             </thead
             <tbody>
-              <?php foreach($statistics['by_city'] as $row): ?>
+              <?php foreach($statistics['by_region'] as $row): ?>
                 <tr>
-                  <td><?php echo $row['cidade']; ?></td>
+                  <td><?php echo $row['regiao']; ?></td>
+                  <td><?php echo $row['total']; ?></td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Estado</th>
+                <th scope="col">Provedores</th>
+              </tr>
+            </thead
+            <tbody>
+              <?php foreach($statistics['by_state'] as $row): ?>
+                <tr>
+                  <td><?php echo $row['estado']; ?></td>
                   <td><?php echo $row['total']; ?></td>
                 </tr>
               <?php endforeach ?>
@@ -80,7 +117,8 @@
   </div>
 </body>
 
-<script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
 <script src="https://kit.fontawesome.com/afc7c9c072.js" crossorigin="anonymous"></script>
 
 </html>
