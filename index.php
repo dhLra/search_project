@@ -9,8 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/turing-fbr/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/turing-fbr/css/custom.css">
 
   <title>TURING</title>
 </head>
@@ -22,7 +22,7 @@
     <div class="row">
       <div class="col col-md-5 col-lg-5">
         <img class="img-fluid" src="img/logo_1.png">
-        <form action="/connection.php" method="POST">
+        <form action="/turing-fbr/connection.php" method="POST">
           <div class="row">
             <div class="col-12">
               <input type="text" name="param" id="busca" class="form-control" placeholder="Informe os dados aqui">
@@ -117,8 +117,8 @@
   </div>
 </body>
 
-<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/turing-fbr/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/turing-fbr/js/main.js"></script>
 <script src="https://kit.fontawesome.com/afc7c9c072.js" crossorigin="anonymous"></script>
 
 </html>

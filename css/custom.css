@@ -7,7 +7,7 @@ body,html{
 }
 
 body {
-  background-image: url(/img/mapa.png);
+  background-image: url(/turing-fbr/img/mapa.png);
   background-repeat: no-repeat;
   background-position: 95% 100px;
   background-size: 40%;
@@ -86,4 +86,18 @@ body {
 .table th {
   max-width: 250px;
   word-break: break-word;
+}
+
+.provedores th{
+  text-align: center;
+}
+
+.provedores td{
+  padding: 0;
+}
+
+.provedores td button{
+  padding: 5px;
+  text-align: center;
+  width: 100%;
 }
