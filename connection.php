@@ -47,6 +47,18 @@ if (isset($_POST['submit'])) {
             
             break;
 
+        case 7:
+            $search_type = "Nome Fantasia";
+            $nome = "%" . $paremetro . "%";
+            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `Nome_Fantasia` LIKE :nome');
+            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
+            $sth->execute();
+
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+            
+            
+            break;
+
         case 3:
             $search_type = "Serviço";
             $nome = "%" . $paremetro . "%";
@@ -80,6 +92,17 @@ if (isset($_POST['submit'])) {
 
             $result = $sth->fetchAll(PDO::FETCH_ASSOC);
             
+            
+            break;
+
+        case 8:
+            $search_type = "Região";
+            $nome = "%" . $paremetro . "%";
+            $sth = $conn->prepare("SELECT * FROM `provedores` WHERE `Regiao` LIKE :nome");
+            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
+            $sth->execute();
+
+            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
             
             break;
 

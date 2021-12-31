@@ -37,7 +37,7 @@
                     <div class="row bg-light m-2">
                         <form action="/result_provider.php" method="post" target="_blank">
                             <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
-                            <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['Nome_Fantasia']; ?></button>
+                            <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['Nome_Fantasia'] . ' - ' . $row["NomeRazão_Social"]; ?></button>
                         </form>
                     </div>
                 <?php endforeach ?>

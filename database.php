@@ -1,8 +1,8 @@
 <?php
 $hostName = "127.0.0.1";
-$dbName = "adabd";
-$dbLogin = "adabduser";
-$dbPass = "hightechsinuca1337";
+$dbName = "provedores";
+$dbLogin = "mvp";
+$dbPass = "fir3link4";
 
 try {
     $conn = new pdo('mysql:host=' . $hostName . '; dbname=' . $dbName, $dbLogin, $dbPass);

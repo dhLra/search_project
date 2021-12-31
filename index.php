@@ -33,9 +33,11 @@
                 <option value="0">ASN</option>
                 <option value="1">CNPJ/CPF</option>
                 <option value="2">Razão Social</option>
+                <option value="7">Nome fantasia</option>
                 <option value="3">Serviço</option>
                 <option value="4">Municipio</option>
                 <option value="5">UF</option>
+                <option value="8">Região</option>
                 <option value="6">CEP</option>
               </select>
             </div>
@@ -61,14 +63,31 @@
           <table class="table table-bordered">
             <thead>
               <tr>
-                <th scope="col">Cidade</th>
+                <th scope="col">Região</th>
                 <th scope="col">Provedores</th>
               </tr>
             </thead
             <tbody>
-              <?php foreach($statistics['by_city'] as $row): ?>
+              <?php foreach($statistics['by_region'] as $row): ?>
                 <tr>
-                  <td><?php echo $row['cidade']; ?></td>
+                  <td><?php echo $row['regiao']; ?></td>
+                  <td><?php echo $row['total']; ?></td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
+          </table>
+
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Estado</th>
+                <th scope="col">Provedores</th>
+              </tr>
+            </thead
+            <tbody>
+              <?php foreach($statistics['by_state'] as $row): ?>
+                <tr>
+                  <td><?php echo $row['estado']; ?></td>
                   <td><?php echo $row['total']; ?></td>
                 </tr>
               <?php endforeach ?>
