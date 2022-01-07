@@ -9,8 +9,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" type="text/css" href="/turing-fbr/css/bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="/turing-fbr/css/custom.css">
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/custom.css">
 
   <title>TURING</title>
 </head>
@@ -18,107 +18,139 @@
 <body>
 
   <?php include_once "header.php" ?>
-  <div class="container front-form">
-    <div class="row">
-      <div class="col col-md-5 col-lg-5">
-        <img class="img-fluid" src="img/logo_1.png">
-        <form action="/turing-fbr/connection.php" method="POST">
-          <div class="row">
-            <div class="col-12">
-              <input type="text" name="param" id="busca" class="form-control" placeholder="Informe os dados aqui">
+    <div class="container front-form">
+        <div class="row">
+            <div class="col col-12 col-md-5 col-lg-5">
+                <div class="row">
+                    <div class="col">
+                        <img class="img-fluid" src="img/logo_1.png">
+                        <form action="/connection.php" method="POST">
+                            <div class="row">
+                                <div class="col col-9">
+                                    <select name="regiao" class="form-select">
+                                        <option>Regiao</option>
+                                        <?php foreach (getAllRegions() as $row): ?>
+                                            <option value="<?php echo $row['regiao'] ?>">
+                                                <?php echo $row['regiao'] ?>
+                                            </option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                                <div class="col col-3">
+                                    <select name="uf" class="form-select">
+                                        <option>UF</option>
+                                        <?php foreach (getAllStates() as $row): ?>
+                                            <option value="<?php echo $row['estado'] ?>">
+                                                <?php echo $row['estado'] ?>
+                                            </option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="col col-9">
+                                    <input
+                                        list="cities"
+                                        type="text"
+                                        name="cidade"
+                                        class="form-control"
+                                        placeholder="Cidade"
+                                    >
+                                </div>
+                                <div class="col col-3">
+                                    <input
+                                        list="cnpj"
+                                        type="text"
+                                        name="cnpj"
+                                        class="form-control"
+                                        placeholder="CNPJ"
+                                    >
+                                </div>
+                            </div>
+
+                            <div>
+                                <button
+                                    type="submit"
+                                    name="submit"
+                                    class="btn btn-primary btn-search w-100"
+                                >
+                                    Buscar
+                                </button>
+                            </div>
+
+                            <datalist id="cities">
+                                <?php foreach (getAllCities() as $row): ?>
+                                    <option value="<?php echo $row['cidade']; ?>" >
+                                <?php endforeach ?>
+                            </datalist>
+
+                            <datalist id="providers">
+                                <?php foreach (getAllProviders() as $row): ?>
+                                    <option value="<?php echo $row['nome']; ?>" >
+                                <?php endforeach ?>
+                            </datalist>
+
+                            <datalist id="razao-social">
+                                <?php foreach (getAllProvidersRazaoSocial() as $row): ?>
+                                    <option value="<?php echo $row['nome']; ?>" >
+                                <?php endforeach ?>
+                            </datalist>
+                        </form>
+                    </div>
+                </div>
             </div>
-            <div class="col-12 pt-2">
-              <select class="form-select" arial-label="Default select exemple" name="type">
-                <option>Escolha o tipo</option>
-                <option value="0">ASN</option>
-                <option value="1">CNPJ/CPF</option>
-                <option value="2">Razão Social</option>
-                <option value="7">Nome fantasia</option>
-                <option value="3">Serviço</option>
-                <option value="4">Municipio</option>
-                <option value="5">UF</option>
-                <option value="8">Região</option>
-                <option value="6">CEP</option>
-              </select>
+
+            <div class="col col-12 col-md-7 col-lg-7">
+                <div class="row justify-content-center">
+                    <div class="col col-12 col-md-8 col-lg-8 map">
+                        <?php echo file_get_contents("./img/brazil.svg"); ?>
+                    </div>
+                </div>
             </div>
-            <div class="col-12">
-              <button type="submit" name="submit" class="btn btn-primary btn-search w-100">Buscar</button>
-            </div>
-          </div>
-
-          <datalist id="cities">
-            <?php foreach (getAllCities() as $row): ?>
-                <option value="<?php echo $row['cidade']; ?>" >
-            <?php endforeach ?>
-          </datalist>
-
-          <datalist id="providers">
-            <?php foreach (getAllProviders() as $row): ?>
-                <option value="<?php echo $row['nome']; ?>" >
-            <?php endforeach ?>
-          </datalist>
-
-          <datalist id="razao-social">
-            <?php foreach (getAllProvidersRazaoSocial() as $row): ?>
-                <option value="<?php echo $row['nome']; ?>" >
-            <?php endforeach ?>
-          </datalist>
-        </form>
-      </div>
-    </div>
-    <div class="row mt-4">
-      <div class="col col-md-5 col-lg-5">
-        <div class="bg-light statistics">
-          <table class="table table-bordered">
-              <tbody>
-                <tr>
-                  <th scope="row">Total de provedores</th>
-                  <td><?php echo $statistics['total']; ?></td>
-                </tr>
-              </tbody>
-          </table>
-
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">Região</th>
-                <th scope="col">Provedores</th>
-              </tr>
-            </thead
-            <tbody>
-              <?php foreach($statistics['by_region'] as $row): ?>
-                <tr>
-                  <td><?php echo $row['regiao']; ?></td>
-                  <td><?php echo $row['total']; ?></td>
-                </tr>
-              <?php endforeach ?>
-            </tbody>
-          </table>
-
-          <table class="table table-bordered">
-            <thead>
-              <tr>
-                <th scope="col">Estado</th>
-                <th scope="col">Provedores</th>
-              </tr>
-            </thead
-            <tbody>
-              <?php foreach($statistics['by_state'] as $row): ?>
-                <tr>
-                  <td><?php echo $row['estado']; ?></td>
-                  <td><?php echo $row['total']; ?></td>
-                </tr>
-              <?php endforeach ?>
-            </tbody>
-          </table>
         </div>
-      </div>
+
+        <div class="row mt-4">
+            <div class="col col-12 col-md-6 col-lg-6">
+                <div class="row">
+                    <div class="col col-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total de provedores <span id="provider-total"></span></h5>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col col-6" id="uf-provider-total-card" style="visibility: hidden">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Total do estado <span id="uf-provider-total"></span></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col col-12 col-md-3 col-lg-3">
+                <canvas id="provider-chart" width="200" height="200"></canvas>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <footer class="container mt-4">
+    </footer>
 </body>
 
-<script type="text/javascript" src="/turing-fbr/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="/turing-fbr/js/main.js"></script>
+<script>
+    var totalASN = <?php echo totalASN()["provedores"] ?>;
+    var totalISP = <?php echo totalISP()["provedores"] ?>;
+    var totalProvider = totalASN + totalISP;
+</script>
 <script src="https://kit.fontawesome.com/afc7c9c072.js" crossorigin="anonymous"></script>
-
+<script src="https://unpkg.com/svg-z-order@latest"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
 </html>

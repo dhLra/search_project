@@ -1,8 +1,8 @@
 <?php
-$hostName = "127.0.0.1";
+$hostName = "database";
 $dbName = "provedores";
-$dbLogin = "root";
-$dbPass = "";
+$dbLogin = "mvp";
+$dbPass = "fir3link4";
 
 try {
     $conn = new pdo('mysql:host=' . $hostName . '; dbname=' . $dbName, $dbLogin, $dbPass);
@@ -18,13 +18,29 @@ function getAllCities() {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getAllStates() {
+    global $conn;
+
+    $stmt = $conn->prepare('SELECT UF as estado FROM regiao GROUP BY UF ORDER BY UF');
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function getAllRegions() {
+    global $conn;
+
+    $stmt = $conn->prepare('SELECT `Região` as regiao FROM regiao
+                                GROUP BY `Região` ORDER BY `Região`');
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function getAllProviders() {
     global $conn;
 
     $stmt = $conn->prepare('SELECT Nome_Fantasia as nome FROM provedores');
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 }
 
 function getAllProvidersRazaoSocial() {
@@ -33,5 +49,4 @@ function getAllProvidersRazaoSocial() {
     $stmt = $conn->prepare('SELECT `NomeRazão_Social` as nome FROM provedores');
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 }

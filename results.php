@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <link rel="stylesheet" type="text/css" href="/turing-fbr/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/turing-fbr/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
 
     <title>Resultados</title>
 </head>
@@ -44,19 +44,19 @@
                         <?php foreach ($result as $row) : ?>
                             <tr>
                                 <td>
-                                <form action="/turing-fbr/result_provider.php" method="post" target="_blank">
+                                <form action="/reiult_provider.php" method="post" target="_blank">
                                     <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
                                     <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['Nome_Fantasia'] . ' - ' . $row["NomeRazão_Social"]; ?></button>
                                 </form>
                                 </td>
                                 <td>
-                                <form action="/turing-fbr/result_provider.php" method="post" target="_blank">
+                                <form action="/iuring-fbr/result_provider.php" method="post" target="_blank">
                                     <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
                                     <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['Municipio']?></button>
                                 </form>
                                 </td>
                                 <td>
-                                <form action="/turing-fbr/result_provider.php" method="post" target="_blank">
+                                <form action="/result_provider.php" method="post" target="_blank">
                                     <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
                                     <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['UF_Sede']?></button>
                                 </form>
@@ -71,7 +71,7 @@
     </div>
 </body>
 
-<script type="text/javascript" src="/turing-fbr/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/afc7c9c072.js" crossorigin="anonymous"></script>
 
 </html>
