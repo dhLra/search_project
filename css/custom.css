@@ -29,6 +29,10 @@ input, button, select, .card {
   width: 40%;
 }
 
+.map svg g:hover > path {
+  filter: brightness(90%);
+}
+
 .map svg path {
   transition: 200ms;
 }
@@ -45,9 +49,13 @@ input, button, select, .card {
   cursor: pointer;
 }
 
-.map svg g > path:hover:not(#path4940) {
+.map svg g > path:hover:not(#path4940):not(.highlighted) {
   transform: translate(1px, 1px) scale(1.005);
+  filter: brightness(60%);
   cursor: pointer;
+}
+.map svg g > path:hover:not(#path4940):not(.in_highlight) {
+  filter: brightness(100%);
 }
 
 .navbar{

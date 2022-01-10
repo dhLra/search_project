@@ -27,14 +27,14 @@
                         <form action="/connection.php" method="POST">
                             <div class="row">
                                 <div class="col col-9">
-                                    <select name="regiao" class="form-select">
-                                        <option>Regiao</option>
-                                        <?php foreach (getAllRegions() as $row): ?>
-                                            <option value="<?php echo $row['regiao'] ?>">
-                                                <?php echo $row['regiao'] ?>
-                                            </option>
-                                        <?php endforeach ?>
-                                    </select>
+                                <select name="regiao" class="form-select">
+                                    <option>Regiao</option>
+                                    <option value="Norte">Norte</option>
+                                    <option value="Nordeste">Nordeste</option>
+                                    <option value="Centro-Oeste">Centro-Oeste</option>
+                                    <option value="Sudeste">Sudeste</option>
+                                    <option value="Sul">Sul</option>
+                                </select>
                                 </div>
                                 <div class="col col-3">
                                     <select name="uf" class="form-select">
@@ -121,10 +121,10 @@
                         </div>
                     </div>
 
-                    <div class="col col-6" id="uf-provider-total-card" style="visibility: hidden">
+                    <div class="col col-6" id="second-provider-total-card" style="visibility: hidden">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Total do estado <span id="uf-provider-total"></span></h5>
+                                <h5 class="card-title"><span id="second-provider-total"></span></h5>
                             </div>
                         </div>
                     </div>

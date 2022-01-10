@@ -44,6 +44,7 @@ function totalISP() {
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
 function totalProviderByUF($uf) {
     global $conn;
     $stmt = $conn->prepare("
@@ -57,7 +58,35 @@ function totalProviderByUF($uf) {
     $stmt->bindParam(":uf", $uf);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
+function totalProviderByRegion($region) {
+    global $conn;
+    $stmt = $conn->prepare("
+        SELECT
+            COUNT(*) AS provedores
+        FROM provedores AS p
+        WHERE p.`Regiao` = :region"
+    );
+
+    $stmt->bindParam(":region", $region);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function quantASNByRegion($region) {
+    global $conn;
+    $stmt = $conn->prepare("
+        SELECT
+            COUNT(*) AS provedores
+        FROM provedores AS p
+        WHERE p.ASN <> '' AND
+              p.`Regiao` = :region"
+    );
+
+    $stmt->bindParam(":region", $region);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 function quantASNByUf($uf) {
@@ -88,6 +117,21 @@ function quantISPByUf($uf) {
     );
 
     $stmt->bindParam(":uf", $uf);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+function quantISPByRegion($region) {
+    global $conn;
+    $stmt = $conn->prepare("
+        SELECT
+            COUNT(*) AS provedores
+        FROM provedores AS p
+        WHERE p.ASN = '' AND
+              p.`Regiao` = :region"
+    );
+
+    $stmt->bindParam(":region", $region);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }

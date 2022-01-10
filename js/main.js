@@ -106,6 +106,13 @@ function highlightRegion(region) {
   setTimeout(function() {
       SVG_REGIAO[region].forEach(function (item) {
         let regiaoEl = document.querySelector("#"+item);
+        let ufElComplement = null;
+
+        if (UF_COMPLEMENTS[item]) {
+          ufElComplement = document.querySelector("#" + UF_COMPLEMENTS[item]);
+          ufElComplement.classList.add("highlighted");
+        }
+
         regiaoEl.classList.add("highlighted");
       });
   }, 50);
@@ -135,7 +142,6 @@ function highlightState(uf) {
   setTimeout(function() {
     ufEl.classList.add("highlighted");
     if (ufElComplement) {
-      console.log(ufElComplement);
       ufElComplement.classList.add("highlighted");
     }
   }, 50);
@@ -200,6 +206,12 @@ window.addEventListener('load', function () {
     updateUFStatistics(event.target.value);
   });
 
+  regionSelect.addEventListener("change", function(event) {
+    if (!event.target.value) return;
+
+    updateRegionStatistics(event.target.value);
+  });
+
   setupCharts();
 
   updateProviderTotalSign(totalProvider);
@@ -209,10 +221,10 @@ function updateProviderTotalSign(total) {
   document.querySelector("#provider-total").textContent = total;
 }
 
-function updateUfProviderTotalSign(total) {
-  let el = document.querySelector("#uf-provider-total");
-  document.querySelector('#uf-provider-total-card').style.visibility = 'visible';
-  el.textContent = total;
+function updateSecondProviderTotalSign(total, text) {
+  let el = document.querySelector("#second-provider-total");
+  document.querySelector('#second-provider-total-card').style.visibility = 'visible';
+  el.textContent = text + ' ' + total;
   el.style.display = 'block';
 }
 
@@ -230,7 +242,26 @@ function updateUFStatistics(uf) {
     body.json().then(function (data) {
       let totalProvider = parseFloat(data.provider);
       updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
-      updateUfProviderTotalSign(totalProvider);
+      updateSecondProviderTotalSign(totalProvider, "Total do estado");
+    });
+  });
+}
+
+function updateRegionStatistics(region) {
+  fetch("/controller.php", {
+    method: "POST",
+    headers: {
+      'Content-Type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/provider/region",
+      region: region,
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      let totalProviderRegion = parseFloat(data.provider);
+      updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
+      updateSecondProviderTotalSign(totalProviderRegion, "Total da região");
     });
   });
 }
@@ -242,28 +273,37 @@ function setupCharts() {
   updateProviderChart(totalASN, totalISP);
 }
 
+var asn_isp_data = {
+  labels: [
+    "ASNs",
+    "ISPs"
+  ],
+  datasets: [{
+    data: [],
+    hoverOffset: 4,
+    backgroundColor: [
+      chartColors.color2,
+      chartColors.color0
+    ],
+  }]
+};
+
 function initProviderChart() {
-  let ctx = document.getElementById("provider-chart").getContext("2d");
-  charts.asn = new Chart(ctx, {
+  let asnCtx = document.getElementById("provider-chart").getContext("2d");
+
+  charts.provider = new Chart(asnCtx, {
     type: 'doughnut',
-    data: {
-      labels: [
-        "ASNs",
-        "ISPs"
-      ],
-      datasets: [{
-        data: [],
-        hoverOffset: 4,
-        backgroundColor: [
-          chartColors.color2,
-          chartColors.color0
-        ],
-      }]
-    },
-  })
+    data: asn_isp_data,
+  });
 }
 
 function updateProviderChart(asn, isp) {
-  charts.asn.data.datasets[0].data = [asn, isp];
-  charts.asn.update();
+  charts.provider.data.datasets[0].data = [asn, isp];
+  charts.provider.update();
+}
+
+function updateProviderChartData(data) {
+  charts.provider.data = data;
+  charts.provider.update();
+
 }
