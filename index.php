@@ -110,13 +110,13 @@
             </div>
         </div>
 
-        <div class="row mt-4">
+        <div class="row mt-4 front-cards">
             <div class="col col-12 col-md-6 col-lg-6">
                 <div class="row">
                     <div class="col col-6">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Total de provedores <span id="provider-total"></span></h5>
+                                <h5 class="card-title">Total de <wbr/>provedores: <wbr/><span id="provider-total"></span></h5>
                             </div>
                         </div>
                     </div>
@@ -135,6 +135,13 @@
         <div class="row mt-4">
             <div class="col col-12 col-md-3 col-lg-3">
                 <canvas id="provider-chart" width="200" height="200"></canvas>
+            </div>
+            <div class="col col-12 col-md-9">
+                <div class="row justify-content-end">
+                    <div class="col col-12 col-md-9">
+                        <canvas id="active-circuit-chart" width="500" height="300"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

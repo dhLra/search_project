@@ -17,6 +17,10 @@ switch ($post["action"]) {
     case "statistic/provider/region":
         providerRegionStatistics();
         break;
+
+    case "statistic/city/circuit-active":
+        activeCityCircuitsStatistics();
+        break;
 }
 
 function providerCityStatistics() {
@@ -43,5 +47,12 @@ function providerRegionStatistics() {
         "provider" => totalProviderBy("Regiao", $post["region"])["provedores"],
         "asn" => totalASNBy("Regiao", $post["region"])["provedores"],
         "isp" => totalISPBy("Regiao", $post["region"])["provedores"],
+    ]);
+}
+
+function activeCityCircuitsStatistics() {
+    global $post;
+    echo json_encode([
+        "circuits" => activeCircuitsByCity($post["city"]),
     ]);
 }

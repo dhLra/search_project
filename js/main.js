@@ -186,6 +186,9 @@ window.addEventListener('load', function () {
     if (state) {
       dehighlightPaths();
       highlightState(state);
+      if (state != stateSelect.value) {
+        stateSelect.value = "";
+      }
     }
   })
 
@@ -236,6 +239,8 @@ window.addEventListener('load', function () {
   setupCharts();
 
   updateProviderTotalSign(totalProvider);
+
+  updateActiveCircuitCityStatistics();
 });
 
 function updateProviderTotalSign(total) {
@@ -245,7 +250,7 @@ function updateProviderTotalSign(total) {
 function updateSecondProviderTotalSign(total, text) {
   let el = document.querySelector("#second-provider-total");
   document.querySelector('#second-provider-total-card').style.visibility = 'visible';
-  el.textContent = text + ' ' + total;
+  el.innerHTML = text + ' ' + total;
   el.style.display = 'block';
 }
 
@@ -282,16 +287,16 @@ function updateUFStatistics(uf) {
     body.json().then(function (data) {
       let totalProvider = parseFloat(data.provider);
       updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
-      updateSecondProviderTotalSign(totalProvider, "Total do estado");
+      updateSecondProviderTotalSign(totalProvider, "Total do <wbr/>estado:<wbr/>");
     });
   });
 }
 
 function updateRegionStatistics(region) {
   fetch("/controller.php", {
-    method: "POST",
+    method: "post",
     headers: {
-      'Content-Type': "application/json",
+      'content-type': "application/json",
     },
     body: JSON.stringify({
       action: "statistic/provider/region",
@@ -301,7 +306,32 @@ function updateRegionStatistics(region) {
     body.json().then(function (data) {
       let totalProviderRegion = parseFloat(data.provider);
       updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
-      updateSecondProviderTotalSign(totalProviderRegion, "Total da região");
+      updateSecondProviderTotalSign(totalProviderRegion, "total da <wbr/>região:<wbr/>");
+    });
+  });
+}
+
+function updateActiveCircuitCityStatistics() {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/city/circuit-active",
+      city: "",
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      let circuits = data.circuits.slice(0, 20);
+      updateActiveCircuitChar(
+        circuits.map(function (a) {
+          return a.cidade;
+        }),
+        circuits.map(function (a) {
+          return a.circuitos;
+        }
+      ));
     });
   });
 }
@@ -310,6 +340,7 @@ function setupCharts() {
   Chart.defaults.color = "#fff";
 
   initProviderChart();
+  initActiveCircuitChart();
   updateProviderChart(totalASN, totalISP);
 }
 
@@ -328,6 +359,19 @@ var asn_isp_data = {
   }]
 };
 
+var circuit_active_data = {
+  labels: [],
+  datasets: [{
+    label: "Circuitos ativos por cidade",
+    data: [],
+    hoverOffset: 4,
+    backgroundColor: [
+      chartColors.color2,
+      chartColors.color0,
+    ],
+  }],
+};
+
 function initProviderChart() {
   let asnCtx = document.getElementById("provider-chart").getContext("2d");
 
@@ -335,6 +379,22 @@ function initProviderChart() {
     type: 'doughnut',
     data: asn_isp_data,
   });
+}
+
+function initActiveCircuitChart() {
+  let circuitCtx = document.getElementById("active-circuit-chart").getContext("2d");
+
+  charts.activeCircuit = new Chart(circuitCtx, {
+    type: 'bar',
+    data: circuit_active_data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
 }
 
 function updateProviderChart(asn, isp) {
@@ -345,5 +405,10 @@ function updateProviderChart(asn, isp) {
 function updateProviderChartData(data) {
   charts.provider.data = data;
   charts.provider.update();
+}
 
+function updateActiveCircuitChar(cities, circuits) {
+  charts.activeCircuit.data.labels = cities;
+  charts.activeCircuit.data.datasets[0].data = circuits;
+  charts.activeCircuit.update();
 }
