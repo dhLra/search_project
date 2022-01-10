@@ -28,7 +28,7 @@
                             <div class="row">
                                 <div class="col col-9">
                                 <select name="regiao" class="form-select">
-                                    <option>Regiao</option>
+                                    <option value="">Regiao</option>
                                     <option value="Norte">Norte</option>
                                     <option value="Nordeste">Nordeste</option>
                                     <option value="Centro-Oeste">Centro-Oeste</option>
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="col col-3">
                                     <select name="uf" class="form-select">
-                                        <option>UF</option>
+                                        <option value="">UF</option>
                                         <?php foreach (getAllStates() as $row): ?>
                                             <option value="<?php echo $row['estado'] ?>">
                                                 <?php echo $row['estado'] ?>

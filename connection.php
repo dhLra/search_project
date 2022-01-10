@@ -2,136 +2,56 @@
 
 require __DIR__ . "/database.php";
 
-if (isset($_POST['submit'])) {
-    $paremetro = ($_POST['param']);
-    $tipo = ($_POST['type']);
+function appendAND($sql, $bindings) {
+    if (count($bindings) > 0) {
+        return "$sql AND ";
+    }
 
-    $search_param = $paremetro;
+    return $sql;
+}
+
+if (isset($_POST['submit'])) {
+    /* echo "<pre>"; */
+    /* var_dump($_POST); */
+    /* echo "</pre>"; */
+    /* die(); */
+
+    $search_param = "";
+    $search_type = "";
     // Resultados da busca
     $result = []; 
 
-    switch ($tipo) {
-        case 0:
-            $search_type = "ASN";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `ASN` LIKE :nome');
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
+    $bindings = [];
+    $sql = 'SELECT * FROM `provedores` WHERE ';
 
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            
-            break;
-
-        case 1:
-            $search_type = "CNPJ/CPF";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `CNPJCPF` LIKE :nome');
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
-
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            
-            break;
-
-        case 2:
-            $search_type = "Razão Social";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `NomeRazão_Social` LIKE :nome');
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
-
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            
-            break;
-
-        case 7:
-            $search_type = "Nome Fantasia";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `Nome_Fantasia` LIKE :nome');
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
-
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            
-            break;
-
-        case 3:
-            $search_type = "Serviço";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `Nome_do_Serviço` LIKE :nome');
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
-
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            
-            break;
-
-        case 4:
-            $search_type = "Minicípio";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `Municipio` LIKE :nome');
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
-
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            
-            break;
-
-        case 5:
-            $search_type = "UF";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `UF_Sede` LIKE :nome');
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
-
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            
-            break;
-
-        case 8:
-            $search_type = "Região";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare("SELECT * FROM `provedores` WHERE `Regiao` LIKE :nome");
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
-
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            break;
-
-        case 6:
-            $search_type = "CEP";
-            $nome = "%" . $paremetro . "%";
-            $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `CEP_Sede` LIKE :nome');
-            $sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-            $sth->execute();
-
-            $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-            
-            
-            break;
+    if (strlen($_POST["uf"]) > 0) {
+        $sql = appendAND($sql, $bindings);
+        $sql .= "UF_SEDE LIKE :uf ";
+        $bindings[] = [":uf", $_POST["uf"]];
     }
+
+    if (strlen($_POST["cnpj"]) > 0) {
+        $sql = appendAND($sql, $bindings);
+        $sql .= "CNPJCPF LIKE :cnpj ";
+        $bindings[] = [":cnpj", $_POST["cnpj"]];
+    }
+
+    if (strlen($_POST["cidade"]) > 0) {
+        $sql = appendAND($sql, $bindings);
+        $sql .= "Municipio LIKE :cidade ";
+        $bindings[] = [":cidade", $_POST["cidade"]];
+    }
+
+    $stmt = $conn->prepare($sql);
+
+    for ($i = 0; $i < count($bindings); $i++) {
+        $stmt->bindParam($bindings[$i][0], $bindings[$i][1]);
+    }
+
+    $stmt->execute();
+
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     require __DIR__ . '/results.php';
     /* require __DIR__ . '/result_provider.php'; */
 }
-
-/*
-$nome = "%" . trim($_GET['param']) . "%";
-$sth = $conn->prepare('SELECT * FROM `provedores` WHERE `Municipio` LIKE :nome');
-$sth->bindParam(':nome', $nome, PDO::PARAM_STR);
-$sth->execute();
-
-$result = $sth->fetchAll(PDO::FETCH_ASSOC);
-
-
-exit;
-*/
-?>
