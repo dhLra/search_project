@@ -45,93 +45,46 @@ function totalISP() {
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function totalProviderByUF($uf) {
-    global $conn;
-    $stmt = $conn->prepare("
-        SELECT
-            p.`UF_Sede` as uf,
-            COUNT(*) AS provedores
-        FROM provedores AS p
-        WHERE p.`UF_Sede` = :uf"
-    );
-
-    $stmt->bindParam(":uf", $uf);
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
-
-function totalProviderByRegion($region) {
+function totalProviderBy($paramName, $paramValue) {
     global $conn;
     $stmt = $conn->prepare("
         SELECT
             COUNT(*) AS provedores
         FROM provedores AS p
-        WHERE p.`Regiao` = :region"
+        WHERE p.`$paramName` = :pv"
     );
 
-    $stmt->bindParam(":region", $region);
+    $stmt->bindParam(":pv", $paramValue);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function quantASNByRegion($region) {
+function totalASNBy($paramName, $paramValue) {
     global $conn;
     $stmt = $conn->prepare("
         SELECT
             COUNT(*) AS provedores
         FROM provedores AS p
         WHERE p.ASN <> '' AND
-              p.`Regiao` = :region"
+              p.`$paramName` = :pv"
     );
 
-    $stmt->bindParam(":region", $region);
+    $stmt->bindParam(":pv", $paramValue);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function quantASNByUf($uf) {
-    global $conn;
-    $stmt = $conn->prepare("
-        SELECT
-            p.`UF_Sede` as uf,
-            COUNT(*) AS provedores
-        FROM provedores AS p
-        WHERE p.ASN <> '' AND
-              p.`UF_Sede` = :uf"
-    );
-
-    $stmt->bindParam(":uf", $uf);
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
-
-function quantISPByUf($uf) {
-    global $conn;
-    $stmt = $conn->prepare("
-        SELECT
-            p.`UF_Sede` as uf,
-            COUNT(*) AS provedores
-        FROM provedores AS p
-        WHERE p.ASN = '' AND
-              p.`UF_Sede` = :uf"
-    );
-
-    $stmt->bindParam(":uf", $uf);
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC);
-}
-
-function quantISPByRegion($region) {
+function totalISPBy($paramName, $paramValue) {
     global $conn;
     $stmt = $conn->prepare("
         SELECT
             COUNT(*) AS provedores
         FROM provedores AS p
         WHERE p.ASN = '' AND
-              p.`Regiao` = :region"
+              p.`$paramName` = :pv"
     );
 
-    $stmt->bindParam(":region", $region);
+    $stmt->bindParam(":pv", $paramValue);
     $stmt->execute();
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }

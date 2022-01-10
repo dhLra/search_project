@@ -89,6 +89,16 @@ var SVG_REGIAO = {
   ],
 };
 
+function findCity(cityName) {
+  for (let i = 0; i < allCities.length; i++) {
+    if (allCities[i].cidade == cityName) {
+      return allCities[i];
+    }
+  }
+
+  return {};
+}
+
 function highlightRegion(region) {
   if (!SVG_REGIAO[region]) {
     return;
@@ -156,7 +166,8 @@ function dehighlightPaths() {
 
 window.addEventListener('load', function () {
   let regionSelect = document.querySelector("select[name=regiao]");
-  let stateSelect = document.querySelector("select[name=uf]")
+  let stateSelect = document.querySelector("select[name=uf]");
+  let cityInput = document.querySelector("input[name=cidade]");
 
   regionSelect.addEventListener("change", function(event) {
     dehighlightPaths();
@@ -170,16 +181,22 @@ window.addEventListener('load', function () {
     regionSelect.value = "";
   });
 
+  cityInput.addEventListener("change", function(event) {
+    let state = findCity(event.target.value).estado;
+    if (state) {
+      dehighlightPaths();
+      highlightState(state);
+    }
+  })
+
   highlightRegion(regionSelect.value);
   highlightState(stateSelect.value);
 
 
-  let lastChange = Date.now();
-  let hoverUf = "";
   Object.keys(SVG_UF).forEach(function(uf) {
     let ufCell = document.querySelector("#" + SVG_UF[uf]);
 
-    ufCell.addEventListener("click", function(event) {
+    ufCell.addEventListener("click", function() {
       stateSelect.value = uf;
       regionSelect.value = "";
       dehighlightPaths();
@@ -189,7 +206,7 @@ window.addEventListener('load', function () {
 
     if (UF_COMPLEMENTS[SVG_UF[uf]]) {
       let ufCellComplement = document.querySelector("#" + UF_COMPLEMENTS[SVG_UF[uf]]);
-      ufCellComplement.addEventListener("click", function(event) {
+      ufCellComplement.addEventListener("click", function() {
         stateSelect.value = uf;
         regionSelect.value = "";
         dehighlightPaths();
@@ -212,6 +229,10 @@ window.addEventListener('load', function () {
     updateRegionStatistics(event.target.value);
   });
 
+  cityInput.addEventListener("change", function(event) {
+    updateCityStatistics(event.target.value);
+  });
+
   setupCharts();
 
   updateProviderTotalSign(totalProvider);
@@ -226,6 +247,25 @@ function updateSecondProviderTotalSign(total, text) {
   document.querySelector('#second-provider-total-card').style.visibility = 'visible';
   el.textContent = text + ' ' + total;
   el.style.display = 'block';
+}
+
+function updateCityStatistics(city) {
+  fetch("/controller.php", {
+    method: "POST",
+    headers: {
+      'Content-Type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/provider/city",
+      city: city,
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      let totalProvider = parseFloat(data.provider);
+      updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
+      updateSecondProviderTotalSign(totalProvider, "Total da cidade");
+    });
+  });
 }
 
 function updateUFStatistics(uf) {

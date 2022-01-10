@@ -18,6 +18,15 @@ function getAllCities() {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function getAllCitiesWithStates() {
+    global $conn;
+
+    $stmt = $conn->prepare('SELECT Município as cidade, UF as estado FROM regiao');
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function getAllStates() {
     global $conn;
 

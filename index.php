@@ -147,6 +147,8 @@
     var totalASN = <?php echo totalASN()["provedores"] ?>;
     var totalISP = <?php echo totalISP()["provedores"] ?>;
     var totalProvider = totalASN + totalISP;
+
+    var allCities = <?php echo json_encode(getAllCitiesWithStates()) ?>;
 </script>
 <script src="https://kit.fontawesome.com/afc7c9c072.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/svg-z-order@latest"></script>
