@@ -4,6 +4,8 @@ var chartColors = {
   color2: "#F24405",
 };
 
+var topChartMaxValue = 50;
+
 var charts = {};
 
 var UF_COMPLEMENTS = {
@@ -241,7 +243,9 @@ window.addEventListener('load', function () {
   updateProviderTotalSign(totalProvider);
 
   updateActiveCircuitCityStatistics();
+  updateCoverageAreaStatistics();
 });
+
 
 function updateProviderTotalSign(total) {
   document.querySelector("#provider-total").textContent = total;
@@ -271,6 +275,12 @@ function updateCityStatistics(city) {
       updateSecondProviderTotalSign(totalProvider, "Total da cidade");
     });
   });
+
+  let c = findCity(city);
+  if (c.estado) {
+    updateActiveCircuitCityUfStatistics(c.estado);
+    updateCoverageAreaUFStatistics(c.estado);
+  }
 }
 
 function updateUFStatistics(uf) {
@@ -292,6 +302,7 @@ function updateUFStatistics(uf) {
   });
 
   updateActiveCircuitCityUfStatistics(uf);
+  updateCoverageAreaUFStatistics(uf);
 }
 
 function updateRegionStatistics(region) {
@@ -313,6 +324,7 @@ function updateRegionStatistics(region) {
   });
 
   updateActiveCircuitCityRegionStatistics(region);
+  updateCoverageAreaRegionStatistics(region);
 }
 
 function updateActiveCircuitCityStatistics() {
@@ -327,8 +339,8 @@ function updateActiveCircuitCityStatistics() {
     }),
   }).then(function (body) {
     body.json().then(function (data) {
-      let circuits = data.circuits.slice(0, 100);
-      updateActiveCircuitChar(
+      let circuits = data.circuits.slice(0, topChartMaxValue);
+      updateActiveCircuitChart(
         circuits.map(function (a) {
           return a.cidade;
         }),
@@ -353,7 +365,7 @@ function updateActiveCircuitCityRegionStatistics(region) {
   }).then(function (body) {
     body.json().then(function (data) {
       let circuits = data.circuits.slice(0, 20);
-      updateActiveCircuitChar(
+      updateActiveCircuitChart(
         circuits.map(function (a) {
           return a.cidade;
         }),
@@ -379,7 +391,7 @@ function updateActiveCircuitCityUfStatistics(uf) {
   }).then(function (body) {
     body.json().then(function (data) {
       let circuits = data.circuits.slice(0, 20);
-      updateActiveCircuitChar(
+      updateActiveCircuitChart(
         circuits.map(function (a) {
           return a.cidade;
         }),
@@ -391,11 +403,86 @@ function updateActiveCircuitCityUfStatistics(uf) {
   });
 }
 
+function updateCoverageAreaStatistics() {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/city/area-coverage",
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      let cities = data.cities.slice(0, topChartMaxValue);
+      updateCoverageAreaChart(
+        cities.map(function (a) {
+          return a.cidade;
+        }),
+        cities.map(function (a) {
+          return a.fornecedores;
+        }
+      ));
+    });
+  });
+}
+
+function updateCoverageAreaRegionStatistics(region) {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/region-city/area-coverage",
+      region: region,
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      let cities = data.cities.slice(0, topChartMaxValue);
+      updateCoverageAreaChart(
+        cities.map(function (a) {
+          return a.cidade;
+        }),
+        cities.map(function (a) {
+          return a.fornecedores;
+        }
+      ));
+    });
+  });
+}
+
+function updateCoverageAreaUFStatistics(uf) {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/uf-city/area-coverage",
+      uf: uf,
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      let cities = data.cities.slice(0, topChartMaxValue);
+      updateCoverageAreaChart(
+        cities.map(function (a) {
+          return a.cidade;
+        }),
+        cities.map(function (a) {
+          return a.fornecedores;
+        }
+      ));
+    });
+  });
+}
+
 function setupCharts() {
   Chart.defaults.color = "#fff";
 
   initProviderChart();
   initActiveCircuitChart();
+  initAreaCoverageChart();
   updateProviderChart(totalASN, totalISP);
 }
 
@@ -419,6 +506,21 @@ var circuit_active_data = {
   labels: [],
   datasets: [{
     label: "Top cidades com circuitos ativos",
+    data: [],
+    hoverOffset: 4,
+    backgroundColor: [
+      chartColors.color2,
+      chartColors.color0,
+    ],
+  }],
+};
+
+var area_coverage_data = {
+  labels: [],
+  datasets: [{
+    axis: 'y',
+    fill: false,
+    label: "Top área de cobertura de fornecedores por cidade",
     data: [],
     hoverOffset: 4,
     backgroundColor: [
@@ -458,6 +560,28 @@ function initActiveCircuitChart() {
   })
 }
 
+function initAreaCoverageChart() {
+  let coverageCtx = document.getElementById("area-coverage-chart").getContext("2d");
+
+  charts.coverageArea = new Chart(coverageCtx, {
+    type: 'bar',
+    data: area_coverage_data,
+    options: {
+      indexAxis: 'y',
+      scale: {
+        ticks: {
+          precision: 0
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  })
+}
+
 function updateProviderChart(asn, isp) {
   charts.provider.data.datasets[0].data = [asn, isp];
   charts.provider.update();
@@ -468,8 +592,14 @@ function updateProviderChartData(data) {
   charts.provider.update();
 }
 
-function updateActiveCircuitChar(cities, circuits) {
+function updateActiveCircuitChart(cities, circuits) {
   charts.activeCircuit.data.labels = cities;
   charts.activeCircuit.data.datasets[0].data = circuits;
   charts.activeCircuit.update();
+}
+
+function updateCoverageAreaChart(cities, providers) {
+  charts.coverageArea.data.labels = cities;
+  charts.coverageArea.data.datasets[0].data = providers;
+  charts.coverageArea.update();
 }

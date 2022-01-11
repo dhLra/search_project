@@ -29,6 +29,19 @@ switch ($post["action"]) {
     case "statistic/uf-city/circuit-active":
         activeCityUFCircuitsStatistics();
         break;
+
+
+    case "statistic/city/area-coverage":
+        areaCoverageStatistics();
+        break;
+
+    case "statistic/uf-city/area-coverage":
+        areaCoverageUfStatistics();
+        break;
+
+    case "statistic/region-city/area-coverage":
+        areaCoverageRegionStatistics();
+        break;
 }
 
 function providerCityStatistics() {
@@ -76,5 +89,25 @@ function activeCityUFCircuitsStatistics() {
     global $post;
     echo json_encode([
         "circuits" => activeCircuitsByCityUF($post["uf"]),
+    ]);
+}
+
+function areaCoverageStatistics() {
+    echo json_encode([
+        "cities" => coverageAreaCity(),
+    ]);
+}
+
+function areaCoverageUfStatistics() {
+    global $post;
+    echo json_encode([
+        "cities" => coverageAreaCityByUF($post["uf"]),
+    ]);
+}
+
+function areaCoverageRegionStatistics() {
+    global $post;
+    echo json_encode([
+        "cities" => coverageAreaCityByRegion($post["region"]),
     ]);
 }

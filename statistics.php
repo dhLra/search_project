@@ -200,9 +200,79 @@ function activeCircuitsByCityUF($uf) {
     $stmt = $conn->prepare($sql);
 
     if (strlen($uf) > 0) {
-    $stmt->bindParam(":uf", $uf);
+        $stmt->bindParam(":uf", $uf);
     }
 
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function coverageAreaCity() {
+    global $conn;
+    $sql = "
+        SELECT
+            c.nome as cidade,
+          (
+            SELECT COUNT(tc.id_cidade)
+            FROM tabela_cobertura_fornecedor as tc
+            WHERE tc.id_cidade = c.id_cidade
+          ) as fornecedores
+        FROM tabela_cidade as c
+        HAVING fornecedores > 0
+        ORDER BY fornecedores DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function coverageAreaCityByRegion($region) {
+    global $conn;
+    $sql = "
+        SELECT
+            c.nome as cidade,
+            r.`Região` as regiao,
+            (
+                SELECT COUNT(tc.id_cidade)
+                FROM tabela_cobertura_fornecedor as tc
+                WHERE tc.id_cidade = c.id_cidade
+            ) as fornecedores
+        FROM tabela_cidade as c
+        LEFT JOIN regiao as r
+            ON UPPER(r.`Município`) = c.nome
+        WHERE `r`.`Região` = :region
+        HAVING fornecedores > 0
+        ORDER BY fornecedores DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(":region", $region);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function coverageAreaCityByUF($uf) {
+    global $conn;
+    $sql = "
+        SELECT
+          c.nome as cidade,
+          r.UF as estado,
+          (
+            SELECT COUNT(tc.id_cidade)
+            FROM tabela_cobertura_fornecedor as tc
+            WHERE tc.id_cidade = c.id_cidade
+          ) as fornecedores
+        FROM tabela_cidade as c
+        LEFT JOIN regiao as r
+            ON UPPER(r.`Município`) = c.nome
+        WHERE r.UF = :uf
+        HAVING fornecedores > 0
+        ORDER BY fornecedores DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(":uf", $uf);
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }

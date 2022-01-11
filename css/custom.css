@@ -24,7 +24,7 @@ input, button, select, .card {
   border-radius: 24px !important;
 }
 
-canvas {
+canvas:not(.portrait) {
   max-height: 90vh;
 }
 

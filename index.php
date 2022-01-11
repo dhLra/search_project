@@ -146,6 +146,18 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-4">
+            <div class="col col-12 col-md-3 col-lg-3">
+            </div>
+            <div class="col col-12 col-md-9">
+                <div class="row justify-content-end">
+                    <div class="col col-12 col-md-9">
+                        <canvas class="portrait" id="area-coverage-chart" width="500" height="500"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="container mt-4">
