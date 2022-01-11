@@ -23,7 +23,9 @@
             <div class="col col-12 col-md-5 col-lg-5">
                 <div class="row">
                     <div class="col">
-                        <img class="img-fluid" src="img/logo_1.png">
+                        <a href="/">
+                            <img class="img-fluid" src="img/logo_1.png">
+                        </a>
                         <form action="/connection.php" method="POST">
                             <div class="row">
                                 <div class="col col-9">

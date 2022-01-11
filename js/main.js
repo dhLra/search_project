@@ -327,7 +327,7 @@ function updateActiveCircuitCityStatistics() {
     }),
   }).then(function (body) {
     body.json().then(function (data) {
-      let circuits = data.circuits.slice(0, 20);
+      let circuits = data.circuits.slice(0, 100);
       updateActiveCircuitChar(
         circuits.map(function (a) {
           return a.cidade;
@@ -411,13 +411,14 @@ var asn_isp_data = {
       chartColors.color2,
       chartColors.color0
     ],
+    borderSkipped: false,
   }]
 };
 
 var circuit_active_data = {
   labels: [],
   datasets: [{
-    label: "Circuitos ativos por cidade",
+    label: "Top cidades com circuitos ativos",
     data: [],
     hoverOffset: 4,
     backgroundColor: [
@@ -443,6 +444,11 @@ function initActiveCircuitChart() {
     type: 'bar',
     data: circuit_active_data,
     options: {
+      scale: {
+        ticks: {
+          precision: 0
+        }
+      },
       scales: {
         y: {
           beginAtZero: true
