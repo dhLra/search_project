@@ -23,11 +23,21 @@ input, button, select, .card {
   border-radius: 24px !important;
 }
 
-.map svg {
-  position: fixed;
-  top: 100px;
-  width: 40%;
+canvas {
+  max-height: 90vh;
 }
+
+@media screen and (max-width: 801px) {
+  .map {
+    padding-top: 25px;
+  }
+}
+
+/* .map svg { */
+/*   position: fixed; */
+/*   top: 100px; */
+/*   width: 40%; */
+/* } */
 
 .map svg g:hover > path {
   filter: brightness(90%);
@@ -46,16 +56,21 @@ input, button, select, .card {
 
 .map svg path.highlighted {
   transform: translate(1px, 1px) scale(1.009);
+  filter: brightness(100%);
   cursor: pointer;
 }
 
 .map svg g > path:hover:not(#path4940):not(.highlighted) {
   transform: translate(1px, 1px) scale(1.005);
-  filter: brightness(60%);
+  filter: brightness(50%);
   cursor: pointer;
 }
 .map svg g > path:hover:not(#path4940):not(.in_highlight) {
   filter: brightness(100%);
+}
+
+.map svg g > path.in_highlight:hover:not(#path4940) {
+  filter: brightness(60%);
 }
 
 .navbar{
@@ -64,6 +79,11 @@ input, button, select, .card {
 
 .front-form{
     padding-top: 60px;
+}
+
+.front-cards .card-title,
+.front-cards .card-title span {
+  text-align: center;
 }
 
 .btn:not(.normal) {

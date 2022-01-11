@@ -21,6 +21,14 @@ switch ($post["action"]) {
     case "statistic/city/circuit-active":
         activeCityCircuitsStatistics();
         break;
+
+    case "statistic/region-city/circuit-active":
+        activeCityRegionCircuitsStatistics();
+        break;
+
+    case "statistic/uf-city/circuit-active":
+        activeCityUFCircuitsStatistics();
+        break;
 }
 
 function providerCityStatistics() {
@@ -54,5 +62,19 @@ function activeCityCircuitsStatistics() {
     global $post;
     echo json_encode([
         "circuits" => activeCircuitsByCity($post["city"]),
+    ]);
+}
+
+function activeCityRegionCircuitsStatistics() {
+    global $post;
+    echo json_encode([
+        "circuits" => activeCircuitsByCityRegion($post["region"]),
+    ]);
+}
+
+function activeCityUFCircuitsStatistics() {
+    global $post;
+    echo json_encode([
+        "circuits" => activeCircuitsByCityUF($post["uf"]),
     ]);
 }

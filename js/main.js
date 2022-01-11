@@ -290,6 +290,8 @@ function updateUFStatistics(uf) {
       updateSecondProviderTotalSign(totalProvider, "Total do <wbr/>estado:<wbr/>");
     });
   });
+
+  updateActiveCircuitCityUfStatistics(uf);
 }
 
 function updateRegionStatistics(region) {
@@ -309,6 +311,8 @@ function updateRegionStatistics(region) {
       updateSecondProviderTotalSign(totalProviderRegion, "total da <wbr/>região:<wbr/>");
     });
   });
+
+  updateActiveCircuitCityRegionStatistics(region);
 }
 
 function updateActiveCircuitCityStatistics() {
@@ -320,6 +324,57 @@ function updateActiveCircuitCityStatistics() {
     body: JSON.stringify({
       action: "statistic/city/circuit-active",
       city: "",
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      let circuits = data.circuits.slice(0, 20);
+      updateActiveCircuitChar(
+        circuits.map(function (a) {
+          return a.cidade;
+        }),
+        circuits.map(function (a) {
+          return a.circuitos;
+        }
+      ));
+    });
+  });
+}
+
+function updateActiveCircuitCityRegionStatistics(region) {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/region-city/circuit-active",
+      region: region,
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      let circuits = data.circuits.slice(0, 20);
+      updateActiveCircuitChar(
+        circuits.map(function (a) {
+          return a.cidade;
+        }),
+        circuits.map(function (a) {
+          return a.circuitos;
+        }
+      ));
+    });
+  });
+}
+
+
+function updateActiveCircuitCityUfStatistics(uf) {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/uf-city/circuit-active",
+      uf: uf,
     }),
   }).then(function (body) {
     body.json().then(function (data) {

@@ -126,3 +126,83 @@ function activeCircuitsByCity($city) {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function activeCircuitsByCityRegion($region) {
+    global $conn;
+    $sql = "
+        SELECT c.nome as cidade, r.`Região` as regiao, count(tc.id_circuito) as circuitos
+        FROM tabela_ponto AS tp
+        LEFT JOIN tabela_infotecnica as it
+            ON it.id_ponto = tp.id_ponto
+        LEFT JOIN tabela_circuito AS tc
+            ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
+        LEFT JOIN tabela_cidade AS c
+            ON tp.cidade = c.nome
+        LEFT JOIN regiao as r
+            ON UPPER(r.`Município`) = c.nome
+        WHERE c.nome IS NOT NULL 
+                AND tc.status_flag = 'ATIVO'
+                AND (it.ip IS NOT NULL OR (it.login IS NOT NULL AND it.pwd IS NOT NULL))
+    ";
+
+    if (strlen($region) > 0) {
+        $sql .= "
+            AND r.`Região` LIKE :region
+        ";
+    }
+
+    $sql .= "
+        GROUP BY c.id_cidade
+        HAVING circuitos > 0
+        ORDER BY circuitos DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+
+    if (strlen($region) > 0) {
+    $stmt->bindParam(":region", $region);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function activeCircuitsByCityUF($uf) {
+    global $conn;
+    $sql = "
+        SELECT c.nome as cidade, r.UF as estado, count(tc.id_circuito) as circuitos
+        FROM tabela_ponto AS tp
+        LEFT JOIN tabela_infotecnica as it
+            ON it.id_ponto = tp.id_ponto
+        LEFT JOIN tabela_circuito AS tc
+            ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
+        LEFT JOIN tabela_cidade AS c
+            ON tp.cidade = c.nome
+        LEFT JOIN regiao as r
+            ON UPPER(r.`Município`) = c.nome
+        WHERE c.nome IS NOT NULL 
+                AND tc.status_flag = 'ATIVO'
+                AND (it.ip IS NOT NULL OR (it.login IS NOT NULL AND it.pwd IS NOT NULL))
+    ";
+
+    if (strlen($uf) > 0) {
+        $sql .= "
+            AND r.UF LIKE :uf
+        ";
+    }
+
+    $sql .= "
+        GROUP BY c.id_cidade
+        HAVING circuitos > 0
+        ORDER BY circuitos DESC
+    ";
+
+    $stmt = $conn->prepare($sql);
+
+    if (strlen($uf) > 0) {
+    $stmt->bindParam(":uf", $uf);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
