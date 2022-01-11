@@ -2,6 +2,7 @@ var chartColors = {
   color0: "#F2B705",
   color1: "#F29F05",
   color2: "#F24405",
+  color3: "#049DD9",
 };
 
 var topChartMaxValue = 50;
@@ -479,6 +480,7 @@ function updateCoverageAreaUFStatistics(uf) {
 
 function setupCharts() {
   Chart.defaults.color = "#fff";
+  Chart.defaults.borderColor = "#B2ABAC";
 
   initProviderChart();
   initActiveCircuitChart();
@@ -498,6 +500,7 @@ var asn_isp_data = {
       chartColors.color2,
       chartColors.color0
     ],
+    borderWidth: 0,
     borderSkipped: false,
   }]
 };
@@ -525,6 +528,7 @@ var area_coverage_data = {
     hoverOffset: 4,
     backgroundColor: [
       chartColors.color2,
+      chartColors.color3,
       chartColors.color0,
     ],
   }],

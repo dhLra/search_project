@@ -135,10 +135,10 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col col-12 col-md-3 col-lg-3">
+            <div class="col col-12 col-md-4 col-lg-3">
                 <canvas id="provider-chart" width="200" height="200"></canvas>
             </div>
-            <div class="col col-12 col-md-9">
+            <div class="col col-12 col-md-8 col-lg-9">
                 <div class="row justify-content-end">
                     <div class="col col-12 col-md-9">
                         <canvas id="active-circuit-chart" width="500" height="300"></canvas>

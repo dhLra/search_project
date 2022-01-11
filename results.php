@@ -22,9 +22,9 @@
             <div class="col-4" style="text-align: right;">
                 <img src="img/logo_3.png" alt="" style="max-width: 100%;">
             </div>
-            <div class="col-8 d-flex align-items-center">
+            <!--div class="col-8 d-flex align-items-center">
                 <input disabled class="form-control " type="text" placeholder="Parematro de busca" aria-label="default input example" value="<?php echo "$search_type - $search_param" ?>">
-            </div>
+            </div-->
         </div>
     </div>
 
@@ -32,7 +32,7 @@
         <div class="row aling-itens-center">
             <div class="d-grid col-12 mx-auto">
 
-                <table class="table bg-light provedores">
+                <table class="table bg-light provedores" style="overflow: hidden">
                     <thead>
                         <tr>
                             <th scope="col" style="width: 50%;">Nome Fantasia</th>
@@ -40,22 +40,27 @@
                             <th scope="col" style="width: 20%;">UF</th>
                         </tr>
                     </thead>
+                </table>
+
+                <table class="provedores">
                     <tbody>
                         <?php foreach ($result as $row) : ?>
                             <tr>
-                                <td>
-                                <form action="/reiult_provider.php" method="post" target="_blank">
+                                <td class="bg-light" style="width: 50%;">
+                                <form action="/result_provider.php" method="post" target="_blank">
                                     <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
                                     <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['Nome_Fantasia'] . ' - ' . $row["NomeRazão_Social"]; ?></button>
                                 </form>
                                 </td>
-                                <td>
-                                <form action="/iuring-fbr/result_provider.php" method="post" target="_blank">
+                                <td class="separator"></td>
+                                <td class="bg-light" style="width: 30%;">
+                                <form action="/result_provider.php" method="post" target="_blank">
                                     <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
                                     <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['Municipio']?></button>
                                 </form>
                                 </td>
-                                <td>
+                                <td class="separator"></td>
+                                <td class="bg-light" style="width: 20%;">
                                 <form action="/result_provider.php" method="post" target="_blank">
                                     <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
                                     <button type="submit" class="normal btn btn-light btn-link"><?php echo $row['UF_Sede']?></button>

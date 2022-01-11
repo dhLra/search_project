@@ -74,7 +74,7 @@ canvas:not(.portrait) {
   filter: brightness(60%);
 }
 
-.navbar{
+.navbar, .provedores thead {
   background-color: #FE6B01;
 }
 
@@ -149,8 +149,14 @@ canvas:not(.portrait) {
   word-break: break-word;
 }
 
+.provedores {
+  border-radius: 24px;
+}
+
 .provedores th{
   text-align: center;
+  border-width: 0px;
+  color: #fff;
 }
 
 .provedores td{
@@ -161,4 +167,25 @@ canvas:not(.portrait) {
   padding: 5px;
   text-align: center;
   width: 100%;
+}
+
+.provedores tbody tr:first-child > td {
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
+}
+
+.provedores tbody tr:last-child > td {
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.provedores tbody tr:last-child > td {
+  border-width: 0px;
+}
+
+.provedores .separator {
+  width: 10px;
+}
+.provedores .separator::after {
+  content: "\00a0";
 }
