@@ -148,9 +148,14 @@
         </div>
 
         <div class="row mt-4">
-            <div class="col col-12 col-md-3 col-lg-3">
+            <div class="col col-12 col-md-4 col-lg-3">
+                <h5 class="bg-light rounded p-2 text-center">Fornecedores homologados</h4>
+                <div class="list-wrapper bg-light">
+                    <ul class="list-unstyled" style="padding-left: 10px;" id="homologated-provider-list">
+                    </ul>
+                </div>
             </div>
-            <div class="col col-12 col-md-9">
+            <div class="col col-12 col-md-8">
                 <div class="row justify-content-end">
                     <div class="col col-12 col-md-9">
                         <canvas class="portrait" id="area-coverage-chart" width="500" height="500"></canvas>

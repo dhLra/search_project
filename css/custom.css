@@ -20,7 +20,7 @@ body {
   }
 }
 
-input, button, select, .card {
+input, button, select, .card, .list-wrapper, .rounded {
   border-radius: 24px !important;
 }
 
@@ -86,6 +86,18 @@ canvas:not(.portrait) {
 .front-cards .card-title span {
   text-align: center;
   margin: 0;
+}
+
+.list-wrapper {
+  padding-top: 12px;
+  padding-bottom: 5px;
+  overflow: hidden;
+}
+
+#homologated-provider-list {
+  max-height: 400px;
+  width: 100%;
+  overflow-y: auto;
 }
 
 .btn:not(.normal) {
@@ -188,4 +200,21 @@ canvas:not(.portrait) {
 }
 .provedores .separator::after {
   content: "\00a0";
+}
+
+::-webkit-scrollbar{
+width: 10px;
+height: 10px;
+}
+::-webkit-scrollbar-thumb{
+background: #F24405;
+border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover{
+background: #B3AFB3;
+}
+::-webkit-scrollbar-track{
+background: #FFFFFF;
+border-radius: 0px;
+box-shadow: inset 0px 0px 0px 0px #F0F0F0;
 }

@@ -42,6 +42,10 @@ if (isset($_POST['submit'])) {
         $bindings[] = [":cidade", $_POST["cidade"]];
     }
 
+    $sql .= '
+        ORDER BY Municipio ASC
+    ';
+
     $stmt = $conn->prepare($sql);
 
     for ($i = 0; $i < count($bindings); $i++) {

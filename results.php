@@ -20,7 +20,9 @@
     <div class="container">
         <div class="row justify-content-center aling-itens-center">
             <div class="col-4" style="text-align: right;">
-                <img src="img/logo_3.png" alt="" style="max-width: 100%;">
+                <a href="/">
+                    <img src="img/logo_3.png" alt="" style="max-width: 100%;">
+                </a>
             </div>
             <!--div class="col-8 d-flex align-items-center">
                 <input disabled class="form-control " type="text" placeholder="Parematro de busca" aria-label="default input example" value="<?php echo "$search_type - $search_param" ?>">

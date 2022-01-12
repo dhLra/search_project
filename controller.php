@@ -2,6 +2,36 @@
 
 require __DIR__ . "/statistics.php";
 
+$estadosBrasileiros = [
+    'AC'=>'Acre',
+    'AL'=>'Alagoas',
+    'AP'=>'Amapá',
+    'AM'=>'Amazonas',
+    'BA'=>'Bahia',
+    'CE'=>'Ceará',
+    'DF'=>'Distrito Federal',
+    'ES'=>'Espírito Santo',
+    'GO'=>'Goiás',
+    'MA'=>'Maranhão',
+    'MT'=>'Mato Grosso',
+    'MS'=>'Mato Grosso do Sul',
+    'MG'=>'Minas Gerais',
+    'PA'=>'Pará',
+    'PB'=>'Paraíba',
+    'PR'=>'Paraná',
+    'PE'=>'Pernambuco',
+    'PI'=>'Piauí',
+    'RJ'=>'Rio de Janeiro',
+    'RN'=>'Rio Grande do Norte',
+    'RS'=>'Rio Grande do Sul',
+    'RO'=>'Rondônia',
+    'RR'=>'Roraima',
+    'SC'=>'Santa Catarina',
+    'SP'=>'São Paulo',
+    'SE'=>'Sergipe',
+    'TO'=>'Tocantins'
+];
+
 $body = file_get_contents("php://input");
 $post = json_decode($body, true);
 
@@ -30,7 +60,6 @@ switch ($post["action"]) {
         activeCityUFCircuitsStatistics();
         break;
 
-
     case "statistic/city/area-coverage":
         areaCoverageStatistics();
         break;
@@ -41,6 +70,18 @@ switch ($post["action"]) {
 
     case "statistic/region-city/area-coverage":
         areaCoverageRegionStatistics();
+        break;
+
+    case "statistic/uf-provider/homologated":
+        homologatedProvidersUfStatistics();
+        break;
+
+    case "statistic/region-provider/homologated":
+        homologatedProvidersRegionStatistics();
+        break;
+
+    case "statistic/provider/homologated":
+        homologatedProvidersStatistics();
         break;
 }
 
@@ -109,5 +150,29 @@ function areaCoverageRegionStatistics() {
     global $post;
     echo json_encode([
         "cities" => coverageAreaCityByRegion($post["region"]),
+    ]);
+}
+
+function homologatedProvidersUfStatistics() {
+    global $post, $estadosBrasileiros;
+    echo json_encode([
+        "homologated" => providerWithContractByUF($estadosBrasileiros[$post["uf"]]),
+        /* "notHomologated" => providerWithoutContractByUF( */
+        /*     $estadosBrasileiros[$post["uf"]], */
+        /*     $post["uf"] */
+        /* ) */
+    ]);
+}
+
+function homologatedProvidersRegionStatistics() {
+    global $post;
+    echo json_encode([
+        "homologated" => providerWithContractByRegion($post["region"]),
+    ]);
+}
+
+function homologatedProvidersStatistics() {
+    echo json_encode([
+        "homologated" => providerWithContract(),
     ]);
 }

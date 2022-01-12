@@ -245,6 +245,7 @@ window.addEventListener('load', function () {
 
   updateActiveCircuitCityStatistics();
   updateCoverageAreaStatistics();
+  updateHomologatedProvidersStatistics();
 });
 
 
@@ -304,6 +305,7 @@ function updateUFStatistics(uf) {
 
   updateActiveCircuitCityUfStatistics(uf);
   updateCoverageAreaUFStatistics(uf);
+  updateHomologatedProvidersUFStatistics(uf);
 }
 
 function updateRegionStatistics(region) {
@@ -326,6 +328,7 @@ function updateRegionStatistics(region) {
 
   updateActiveCircuitCityRegionStatistics(region);
   updateCoverageAreaRegionStatistics(region);
+  updateHomologatedProvidersRegionStatistics(region);
 }
 
 function updateActiveCircuitCityStatistics() {
@@ -478,6 +481,57 @@ function updateCoverageAreaUFStatistics(uf) {
   });
 }
 
+function updateHomologatedProvidersUFStatistics(uf) {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/uf-provider/homologated",
+      uf: uf,
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      updateHomologatedProvidersList(data.homologated);
+    });
+  });
+}
+
+
+function updateHomologatedProvidersRegionStatistics(region) {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/region-provider/homologated",
+      region: region,
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      updateHomologatedProvidersList(data.homologated);
+    });
+  });
+}
+
+function updateHomologatedProvidersStatistics() {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/provider/homologated",
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      updateHomologatedProvidersList(data.homologated);
+    });
+  });
+}
+
 function setupCharts() {
   Chart.defaults.color = "#fff";
   Chart.defaults.borderColor = "#B2ABAC";
@@ -606,4 +660,14 @@ function updateCoverageAreaChart(cities, providers) {
   charts.coverageArea.data.labels = cities;
   charts.coverageArea.data.datasets[0].data = providers;
   charts.coverageArea.update();
+}
+
+function updateHomologatedProvidersList(providers) {
+  let el = document.getElementById("homologated-provider-list");
+
+  el.innerHTML = `
+    ${providers.map(function (p) {
+      return `<li>${p.nome}</li>`
+    }).join(' ')}
+  `;
 }
