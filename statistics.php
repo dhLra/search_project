@@ -375,6 +375,34 @@ function providerWithContractByRegion($region) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function providerWithContractByCity($city) {
+    global $conn;
+    $sql = '
+        SELECT
+            f.nome as nome,
+            COUNT(fdc.id_doc) AS contratos,
+            CONCAT(
+             (SELECT GROUP_CONCAT(DISTINCT c1.nome SEPARATOR ", ")
+                FROM tabela_cobertura_fornecedor AS tcf1
+                INNER JOIN tabela_cidade as c1
+                    ON tcf1.id_cidade = c1.id_cidade
+                WHERE tcf1.id_fornecedor = f.id_fornecedor
+                GROUP BY NULL
+             ), ",") AS cobertura_cidade
+        FROM fornecedor_doc_contratual AS fdc
+        LEFT JOIN tabela_fornecedor AS f
+            ON f.id_fornecedor = fdc.id_fornecedor
+        WHERE fdc.statusFlag = "ATIVO" AND f.status_flag = "ATIVO"
+        GROUP BY f.nome
+        HAVING cobertura_cidade LIKE CONCAT("% ", :city, ",%")
+    ';
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bindParam(":city", $city);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 function providerWithContract() {
     global $conn;
     $sql = '

@@ -80,6 +80,10 @@ switch ($post["action"]) {
         homologatedProvidersRegionStatistics();
         break;
 
+    case "statistic/city-provider/homologated":
+        homologatedProvidersCityStatistics();
+        break;
+
     case "statistic/provider/homologated":
         homologatedProvidersStatistics();
         break;
@@ -168,6 +172,13 @@ function homologatedProvidersRegionStatistics() {
     global $post;
     echo json_encode([
         "homologated" => providerWithContractByRegion($post["region"]),
+    ]);
+}
+
+function homologatedProvidersCityStatistics() {
+    global $post;
+    echo json_encode([
+        "homologated" => providerWithContractByCity($post["city"]),
     ]);
 }
 

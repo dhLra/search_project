@@ -203,18 +203,18 @@ canvas:not(.portrait) {
 }
 
 ::-webkit-scrollbar{
-width: 10px;
-height: 10px;
+  width: 10px;
+  height: 10px;
 }
 ::-webkit-scrollbar-thumb{
-background: #F24405;
-border-radius: 0px;
+  background: #F24405;
+  border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover{
-background: #B3AFB3;
+  background: #B3AFB3;
 }
 ::-webkit-scrollbar-track{
-background: #FFFFFF;
-border-radius: 0px;
-box-shadow: inset 0px 0px 0px 0px #F0F0F0;
+  background: #FFFFFF;
+  border-radius: 0px;
+  box-shadow: inset 0px 0px 0px 0px #F0F0F0;
 }

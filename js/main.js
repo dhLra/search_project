@@ -283,6 +283,8 @@ function updateCityStatistics(city) {
     updateActiveCircuitCityUfStatistics(c.estado);
     updateCoverageAreaUFStatistics(c.estado);
   }
+
+  updateHomologatedProvidersCityStatistics(city);
 }
 
 function updateUFStatistics(uf) {
@@ -477,6 +479,23 @@ function updateCoverageAreaUFStatistics(uf) {
           return a.fornecedores;
         }
       ));
+    });
+  });
+}
+
+function updateHomologatedProvidersCityStatistics(city) {
+  fetch("/controller.php", {
+    method: "post",
+    headers: {
+      'content-type': "application/json",
+    },
+    body: JSON.stringify({
+      action: "statistic/city-provider/homologated",
+      city: city
+    }),
+  }).then(function (body) {
+    body.json().then(function (data) {
+      updateHomologatedProvidersList(data.homologated);
     });
   });
 }
