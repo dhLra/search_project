@@ -38,7 +38,7 @@
                     <thead>
                         <tr>
                             <th scope="col" style="width: 50%;">Nome Fantasia</th>
-                            <th scope="col" style="width: 30%;">Municipio</th>
+                            <th scope="col" style="width: 30%;" order="asc">Municipio</th>
                             <th scope="col" style="width: 20%;">UF</th>
                         </tr>
                     </thead>
@@ -79,6 +79,7 @@
 </body>
 
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="/js/results.js"></script>
 <script src="https://kit.fontawesome.com/afc7c9c072.js" crossorigin="anonymous"></script>
 
 </html>

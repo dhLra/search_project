@@ -202,6 +202,27 @@ canvas:not(.portrait) {
   content: "\00a0";
 }
 
+.provedores thead th {
+  cursor: pointer;
+}
+.provedores thead th:hover {
+  text-decoration: underline;
+}
+
+.provedores thead th[order]::after {
+  content: " \2794";
+  font-weight: bold;
+  display: inline-block;
+}
+
+.provedores thead th[order=asc]::after {
+  transform: rotate(-90deg);
+}
+
+.provedores thead th[order=desc]::after {
+  transform: rotate(90deg);
+}
+
 ::-webkit-scrollbar{
   width: 10px;
   height: 10px;
