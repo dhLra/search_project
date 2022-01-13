@@ -82,6 +82,11 @@ canvas:not(.portrait) {
     padding-top: 60px;
 }
 
+.front-form [type=submit] {
+  background-image: linear-gradient(45deg, #ffffff80, transparent);
+  border-width: 0px;
+}
+
 .front-cards .card-title,
 .front-cards .card-title span {
   text-align: center;
@@ -179,6 +184,9 @@ canvas:not(.portrait) {
   padding: 5px;
   text-align: center;
   width: 100%;
+}
+.provedores td {
+  text-align: center;
 }
 
 .provedores tbody tr:first-child > td {
