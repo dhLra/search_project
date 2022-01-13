@@ -5,6 +5,11 @@ $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `id` = :nome');
 $sth->bindParam(':nome', $_POST['provider']);
 $sth->execute();
 $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+function formatTelephone($tel) {
+    return preg_replace("/[^0-9]/", "", $tel);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -163,13 +168,21 @@ $result = $sth->fetch(PDO::FETCH_ASSOC);
                         <tr>
                             <th scope="row">Telefone:</th>
                             <td>
-                            <?php echo $result["Telefone_Principal"]; ?>
+                                <a href="tel:<?php
+                                    echo formatTelephone($result["Telefone_Principal"])
+                                ?>">
+                                    <?php echo $result["Telefone_Principal"]; ?>
+                                </a>
                             </td>
                         </tr>
                         <tr>
                             <th scope="row">Email:</th>
                             <td>
-                            <?php echo $result["Endereço_Eletrônico_Principal"]; ?>
+                                <a href="mailto:<?php
+                                    echo $result["Endereço_Eletrônico_Principal"];
+                                ?>">
+                                    <?php echo $result["Endereço_Eletrônico_Principal"]; ?>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
