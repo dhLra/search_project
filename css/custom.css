@@ -74,8 +74,57 @@ canvas:not(.portrait) {
   filter: brightness(60%);
 }
 
+.navbar {
+  padding: 0px;
+  /* min-height: 15px; */
+}
+
+.nav-link {
+  padding-bottom: 2px;
+  padding-top: 2px;
+}
+.nav-link i {
+  display: inline-block;
+}
+.nav-link i::before {
+  color: #fff;
+  font-size: 1.4rem;
+}
+
 .navbar, .provedores thead {
   background-color: #FE6B01;
+}
+
+.loader-parent.active {
+  position: relative;
+  min-height: 200px;
+}
+.loader-parent.active::before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #948082b8;
+}
+
+
+.loader-parent.active .loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid #FE6B01;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+  position: absolute;
+  top: calc(50% - 50px);
+  left: calc(50% - 25px);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 .front-form{
@@ -236,7 +285,7 @@ canvas:not(.portrait) {
   height: 10px;
 }
 ::-webkit-scrollbar-thumb{
-  background: #F24405;
+  background: #FE6B01;
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover{

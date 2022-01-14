@@ -167,6 +167,18 @@ function dehighlightPaths() {
   })
 }
 
+function toggleLoader(id) {
+  document.getElementById(id).classList.toggle("active");
+}
+
+function activeLoader(id) {
+  document.getElementById(id).classList.add("active");
+
+}
+function disableLoader(id) {
+  document.getElementById(id).classList.remove("active");
+}
+
 window.addEventListener('load', function () {
   let regionSelect = document.querySelector("select[name=regiao]");
   let stateSelect = document.querySelector("select[name=uf]");
@@ -261,6 +273,7 @@ function updateSecondProviderTotalSign(total, text) {
 }
 
 function updateCityStatistics(city) {
+  activeLoader("provider-chart-loader");
   fetch("/controller.php", {
     method: "POST",
     headers: {
@@ -275,6 +288,7 @@ function updateCityStatistics(city) {
       let totalProvider = parseFloat(data.provider);
       updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
       updateSecondProviderTotalSign(totalProvider, "Total da cidade");
+      disableLoader("provider-chart-loader");
     });
   });
 
@@ -288,6 +302,7 @@ function updateCityStatistics(city) {
 }
 
 function updateUFStatistics(uf) {
+  activeLoader("provider-chart-loader");
   fetch("/controller.php", {
     method: "POST",
     headers: {
@@ -302,6 +317,7 @@ function updateUFStatistics(uf) {
       let totalProvider = parseFloat(data.provider);
       updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
       updateSecondProviderTotalSign(totalProvider, "Total do <wbr/>estado:<wbr/>");
+      disableLoader("provider-chart-loader");
     });
   });
 
@@ -311,6 +327,7 @@ function updateUFStatistics(uf) {
 }
 
 function updateRegionStatistics(region) {
+  activeLoader("provider-chart-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -325,6 +342,7 @@ function updateRegionStatistics(region) {
       let totalProviderRegion = parseFloat(data.provider);
       updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
       updateSecondProviderTotalSign(totalProviderRegion, "total da <wbr/>região:<wbr/>");
+      disableLoader("provider-chart-loader");
     });
   });
 
@@ -334,6 +352,7 @@ function updateRegionStatistics(region) {
 }
 
 function updateActiveCircuitCityStatistics() {
+  activeLoader("active-circuit-chart-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -354,11 +373,14 @@ function updateActiveCircuitCityStatistics() {
           return a.circuitos;
         }
       ));
+
+      disableLoader("active-circuit-chart-loader");
     });
   });
 }
 
 function updateActiveCircuitCityRegionStatistics(region) {
+  activeLoader("active-circuit-chart-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -379,12 +401,14 @@ function updateActiveCircuitCityRegionStatistics(region) {
           return a.circuitos;
         }
       ));
+      disableLoader("active-circuit-chart-loader");
     });
   });
 }
 
 
 function updateActiveCircuitCityUfStatistics(uf) {
+  activeLoader("active-circuit-chart-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -405,11 +429,13 @@ function updateActiveCircuitCityUfStatistics(uf) {
           return a.circuitos;
         }
       ));
+      disableLoader("active-circuit-chart-loader");
     });
   });
 }
 
 function updateCoverageAreaStatistics() {
+  activeLoader("area-coverage-chart-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -429,11 +455,13 @@ function updateCoverageAreaStatistics() {
           return a.fornecedores;
         }
       ));
+      disableLoader("area-coverage-chart-loader");
     });
   });
 }
 
 function updateCoverageAreaRegionStatistics(region) {
+  activeLoader("area-coverage-chart-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -454,11 +482,13 @@ function updateCoverageAreaRegionStatistics(region) {
           return a.fornecedores;
         }
       ));
+      disableLoader("area-coverage-chart-loader");
     });
   });
 }
 
 function updateCoverageAreaUFStatistics(uf) {
+  activeLoader("area-coverage-chart-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -479,11 +509,13 @@ function updateCoverageAreaUFStatistics(uf) {
           return a.fornecedores;
         }
       ));
+      disableLoader("area-coverage-chart-loader");
     });
   });
 }
 
 function updateHomologatedProvidersCityStatistics(city) {
+  activeLoader("homologated-provider-list-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -497,10 +529,12 @@ function updateHomologatedProvidersCityStatistics(city) {
     body.json().then(function (data) {
       updateHomologatedProvidersList(data.homologated);
     });
+    disableLoader("homologated-provider-list-loader");
   });
 }
 
 function updateHomologatedProvidersUFStatistics(uf) {
+  activeLoader("homologated-provider-list-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -513,12 +547,14 @@ function updateHomologatedProvidersUFStatistics(uf) {
   }).then(function (body) {
     body.json().then(function (data) {
       updateHomologatedProvidersList(data.homologated);
+      disableLoader("homologated-provider-list-loader");
     });
   });
 }
 
 
 function updateHomologatedProvidersRegionStatistics(region) {
+  activeLoader("homologated-provider-list-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -531,11 +567,13 @@ function updateHomologatedProvidersRegionStatistics(region) {
   }).then(function (body) {
     body.json().then(function (data) {
       updateHomologatedProvidersList(data.homologated);
+      disableLoader("homologated-provider-list-loader");
     });
   });
 }
 
 function updateHomologatedProvidersStatistics() {
+  activeLoader("homologated-provider-list-loader");
   fetch("/controller.php", {
     method: "post",
     headers: {
@@ -547,6 +585,7 @@ function updateHomologatedProvidersStatistics() {
   }).then(function (body) {
     body.json().then(function (data) {
       updateHomologatedProvidersList(data.homologated);
+      disableLoader("homologated-provider-list-loader");
     });
   });
 }
