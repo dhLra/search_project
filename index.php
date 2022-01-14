@@ -181,7 +181,7 @@
     var allCities = <?php echo json_encode(getAllCitiesWithStates()) ?>;
 </script>
 <script src="https://kit.fontawesome.com/afc7c9c072.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/svg-z-order@latest"></script>
+<script src="/js/svg-z-order.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
 <script type="text/javascript" src="/js/bootstrap.bundle.min.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>

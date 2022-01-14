@@ -281,24 +281,16 @@ function providerWithContractByUF($uf) {
     global $conn;
     $sql = '
         SELECT
-            f.nome as nome,
-            COUNT(fdc.id_doc) AS contratos,
-            CONCAT(
-                (SELECT GROUP_CONCAT(DISTINCT e2.nome SEPARATOR ", ")
-                    FROM tabela_cobertura_fornecedor AS tcf2
-                    INNER JOIN tabela_cidade as c2
-                        ON tcf2.id_cidade = c2.id_cidade
-                    INNER JOIN tabela_estado as e2
-                        ON e2.id_estado = c2.id_estado
-                    WHERE tcf2.id_fornecedor = f.id_fornecedor
-                    GROUP BY NULL),
-                ",") AS cobertura_estado
-        FROM fornecedor_doc_contratual AS fdc
-        LEFT JOIN tabela_fornecedor AS f
-            ON f.id_fornecedor = fdc.id_fornecedor
-        WHERE fdc.statusFlag = "ATIVO" AND f.status_flag = "ATIVO"
+            f.nome AS nome,
+            f.cnpj AS cnpj
+        FROM tabela_circuito AS tc
+        INNER JOIN tabela_ponto AS tp
+            ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
+        INNER JOIN tabela_fornecedor AS f
+            ON f.id_fornecedor = tp.id_fornecedor
+            
+        WHERE tp.uf = :uf 
         GROUP BY f.nome
-        HAVING cobertura_estado LIKE CONCAT("% ", :uf, ",%")
     ';
 
     $stmt = $conn->prepare($sql);
@@ -307,66 +299,21 @@ function providerWithContractByUF($uf) {
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function providerWithoutContractByUF($ufName, $ufInitials) {
-    global $conn;
-    $sql = '
-        SELECT p.Nome_Fantasia as nome
-        FROM provedores AS p
-        WHERE
-            p.UF_Sede = :ufi AND
-            p.CNPJCPF NOT IN (
-                SELECT _f.cnpj
-                FROM (
-                    SELECT f.cnpj as cnpj, f.nome as nome,
-                    COUNT(fdc.id_doc) AS contratos,
-                    CONCAT(
-                        (SELECT GROUP_CONCAT(DISTINCT e2.nome SEPARATOR ", ")
-                         FROM tabela_cobertura_fornecedor AS tcf2
-                         INNER JOIN tabela_cidade as c2
-                           ON tcf2.id_cidade = c2.id_cidade
-                         INNER JOIN tabela_estado as e2
-                           ON e2.id_estado = c2.id_estado
-                         WHERE tcf2.id_fornecedor = f.id_fornecedor
-                         GROUP BY NULL),
-                         ",") AS cobertura_estado
-                    FROM fornecedor_doc_contratual AS fdc
-                    LEFT JOIN tabela_fornecedor AS f
-                        ON f.id_fornecedor = fdc.id_fornecedor
-                    WHERE fdc.statusFlag = "ATIVO" AND f.status_flag = "ATIVO"
-                    GROUP BY f.nome
-                    HAVING cobertura_estado LIKE CONCAT("% ", :uf, ",%")) as _f
-                WHERE _f.cnpj IS NOT NULL)
-    ';
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(":ufi", $ufInitials);
-    $stmt->bindParam(":uf", $ufName);
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-
 function providerWithContractByRegion($region) {
     global $conn;
     $sql = '
         SELECT
-            f.nome as nome,
-            COUNT(fdc.id_doc) AS contratos,
-            CONCAT(
-             (SELECT GROUP_CONCAT(DISTINCT r3.`Região` SEPARATOR ", ")
-                FROM tabela_cobertura_fornecedor AS tcf3
-                INNER JOIN tabela_cidade as c3
-                    ON tcf3.id_cidade = c3.id_cidade
-                INNER JOIN regiao AS r3
-                    ON UPPER(r3.`Município`) = c3.nome
-                WHERE tcf3.id_fornecedor = f.id_fornecedor
-                GROUP BY NULL
-            ), ",") AS cobertura_regiao
-        FROM fornecedor_doc_contratual AS fdc
-        LEFT JOIN tabela_fornecedor AS f
-            ON f.id_fornecedor = fdc.id_fornecedor
-        WHERE fdc.statusFlag = "ATIVO" AND f.status_flag = "ATIVO"
+            f.nome AS nome,
+            f.cnpj AS cnpj
+        FROM tabela_circuito AS tc
+        INNER JOIN tabela_ponto AS tp
+            ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
+        INNER JOIN tabela_fornecedor AS f
+            ON f.id_fornecedor = tp.id_fornecedor
+        INNER JOIN tabela_estado AS e
+            ON e.sigla = tp.uf
+        WHERE e.regiao = :region
         GROUP BY f.nome
-        HAVING cobertura_regiao LIKE CONCAT("% ", :region, ",%")
     ';
 
     $stmt = $conn->prepare($sql);
@@ -379,22 +326,16 @@ function providerWithContractByCity($city) {
     global $conn;
     $sql = '
         SELECT
-            f.nome as nome,
-            COUNT(fdc.id_doc) AS contratos,
-            CONCAT(
-             (SELECT GROUP_CONCAT(DISTINCT c1.nome SEPARATOR ", ")
-                FROM tabela_cobertura_fornecedor AS tcf1
-                INNER JOIN tabela_cidade as c1
-                    ON tcf1.id_cidade = c1.id_cidade
-                WHERE tcf1.id_fornecedor = f.id_fornecedor
-                GROUP BY NULL
-             ), ",") AS cobertura_cidade
-        FROM fornecedor_doc_contratual AS fdc
-        LEFT JOIN tabela_fornecedor AS f
-            ON f.id_fornecedor = fdc.id_fornecedor
-        WHERE fdc.statusFlag = "ATIVO" AND f.status_flag = "ATIVO"
+            f.nome AS nome,
+            f.cnpj AS cnpj
+        FROM tabela_circuito AS tc
+        INNER JOIN tabela_ponto AS tp
+            ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
+        INNER JOIN tabela_fornecedor AS f
+            ON f.id_fornecedor = tp.id_fornecedor
+            
+        WHERE tp.cidade LIKE :city
         GROUP BY f.nome
-        HAVING cobertura_cidade LIKE CONCAT("% ", :city, ",%")
     ';
 
     $stmt = $conn->prepare($sql);
@@ -407,12 +348,13 @@ function providerWithContract() {
     global $conn;
     $sql = '
         SELECT
-            f.nome as nome,
-            COUNT(fdc.id_doc) AS contratos
-        FROM fornecedor_doc_contratual AS fdc
-        LEFT JOIN tabela_fornecedor AS f
-            ON f.id_fornecedor = fdc.id_fornecedor
-        WHERE fdc.statusFlag = "ATIVO" AND f.status_flag = "ATIVO"
+            f.nome AS nome,
+            f.cnpj AS cnpj
+        FROM tabela_circuito AS tc
+        INNER JOIN tabela_ponto AS tp
+            ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
+        INNER JOIN tabela_fornecedor AS f
+            ON f.id_fornecedor = tp.id_fornecedor
         GROUP BY f.nome
     ';
 

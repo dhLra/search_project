@@ -203,6 +203,7 @@ window.addEventListener('load', function () {
       highlightState(state);
       if (state != stateSelect.value) {
         stateSelect.value = "";
+        regionSelect.value = "";
       }
     }
   })
@@ -341,7 +342,7 @@ function updateRegionStatistics(region) {
     body.json().then(function (data) {
       let totalProviderRegion = parseFloat(data.provider);
       updateProviderChart(parseFloat(data.asn), parseFloat(data.isp));
-      updateSecondProviderTotalSign(totalProviderRegion, "total da <wbr/>região:<wbr/>");
+      updateSecondProviderTotalSign(totalProviderRegion, "Total da <wbr/>região:<wbr/>");
       disableLoader("provider-chart-loader");
     });
   });
@@ -725,7 +726,14 @@ function updateHomologatedProvidersList(providers) {
 
   el.innerHTML = `
     ${providers.map(function (p) {
-      return `<li>${p.nome}</li>`
+      return `<li>
+        <form action="/connection.php" method="POST" target="_blank">
+          <input type="hidden" name="cnpj" value="${p.cnpj}" />
+          <button type="submit">
+            ${p.nome}
+          </button>
+        </form>
+      </li>`
     }).join(' ')}
   `;
 }

@@ -76,19 +76,25 @@ canvas:not(.portrait) {
 
 .navbar {
   padding: 0px;
-  /* min-height: 15px; */
+  min-height: 28px;
 }
 
 .nav-link {
-  padding-bottom: 2px;
-  padding-top: 2px;
+  padding: 0px;
+  position: relative;
+  margin-top: -6px;
 }
+
 .nav-link i {
   display: inline-block;
 }
 .nav-link i::before {
   color: #fff;
   font-size: 1.4rem;
+}
+
+.nav-link:hover i::before {
+  color: #0d6efd;
 }
 
 .navbar, .provedores thead {
@@ -152,6 +158,15 @@ canvas:not(.portrait) {
   max-height: 400px;
   width: 100%;
   overflow-y: auto;
+}
+
+#homologated-provider-list button {
+  background: none;
+  border: none;
+}
+#homologated-provider-list button:hover {
+  color: #0d6efd;
+  text-decoration: underline;
 }
 
 .btn:not(.normal) {

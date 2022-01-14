@@ -158,9 +158,9 @@ function areaCoverageRegionStatistics() {
 }
 
 function homologatedProvidersUfStatistics() {
-    global $post, $estadosBrasileiros;
+    global $post;
     echo json_encode([
-        "homologated" => providerWithContractByUF($estadosBrasileiros[$post["uf"]]),
+        "homologated" => providerWithContractByUF($post["uf"]),
         /* "notHomologated" => providerWithoutContractByUF( */
         /*     $estadosBrasileiros[$post["uf"]], */
         /*     $post["uf"] */

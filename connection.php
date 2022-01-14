@@ -28,6 +28,14 @@ $formInputs = [];
 $bindings = [];
 $sql = 'SELECT * FROM `provedores` WHERE ';
 
+
+if (isset($_POST["nome"]) && strlen($_POST["nome"]) > 0) {
+    $sql = appendAND($sql, $bindings);
+    $sql .= "Nome_Fantasia LIKE :nome ";
+    $bindings[] = [":nome", $_POST["nome"]];
+    $formInputs[] = "<input type='hidden' name='nome' value='$_POST[nome]' />";
+}
+
 if (isset($_POST["uf"]) && strlen($_POST["uf"]) > 0) {
     $sql = appendAND($sql, $bindings);
     $sql .= "UF_SEDE LIKE :uf ";
