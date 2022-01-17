@@ -137,8 +137,8 @@
         <div class="row mt-4">
             <div class="col col-12 col-md-4 col-lg-3 loader-parent" id="provider-chart-loader">
                 <div class="loader"></div>
-                <canvas id="provider-chart" width="200" height="200"></canvas>
-            </div>
+                    <canvas id="provider-chart" width="200" height="200"></canvas>
+                </div>
             <div class="col col-12 col-md-8 col-lg-9">
                 <div class="row justify-content-end">
                     <div class="col col-12 col-md-9 loader-parent" id="active-circuit-chart-loader">

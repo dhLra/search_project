@@ -110,6 +110,23 @@ function formatTelephone($tel) {
                     <tbody>
                         <?php foreach ($result as $row) : ?>
                             <tr>
+                            <?php if ($adaQuery): ?>
+                                <td class="bg-light" style="width: 50%;">
+                                    <?php echo $row['Nome_Fantasia']; ?>
+                                </td>
+                                <td class="separator"></td>
+                                <td class="bg-light" style="width: 30%;">
+                                    <?php echo $row['Municipio']?>
+                                </td>
+                                <td class="separator"></td>
+                                <td class="bg-light" style="width: 20%;">
+                                    <a href="tel:<?php
+                                        echo formatTelephone($row["Telefone_Principal"])
+                                    ?>">
+                                        <?php echo $row['Telefone_Principal']?>
+                                    </a>
+                                </td>
+                            <?php else: ?>
                                 <td class="bg-light" style="width: 50%;">
                                 <form action="/result_provider.php" method="post" target="_blank">
                                     <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
@@ -131,6 +148,7 @@ function formatTelephone($tel) {
                                         <?php echo $row['Telefone_Principal']?>
                                     </a>
                                 </td>
+                            <?php endif ?>
                             </tr>
                         <?php endforeach ?>
                     </tbody>

@@ -726,14 +726,26 @@ function updateHomologatedProvidersList(providers) {
 
   el.innerHTML = `
     ${providers.map(function (p) {
+      if ((p.cnpj+"").length > 1 && p.cnpj != null) {
+          return `<li>
+          <form action="/connection.php" method="POST" target="_blank">
+            <input type="hidden" name="cnpj" value="${p.cnpj}" />
+            <input type="hidden" name="id_ada" value="${p.id}" />
+            <button type="submit">
+              ${p.nome}
+            </button>
+          </form>
+        </li>`;
+      }
       return `<li>
-        <form action="/connection.php" method="POST" target="_blank">
-          <input type="hidden" name="cnpj" value="${p.cnpj}" />
-          <button type="submit">
-            ${p.nome}
-          </button>
-        </form>
-      </li>`
+          <form action="/connection.php" method="POST" target="_blank">
+            <input type="hidden" name="ada_query" value="1" />
+            <input type="hidden" name="id_ada" value="${p.id}" />
+            <button type="submit">
+              ${p.nome}
+            </button>
+          </form>
+      </li>`;
     }).join(' ')}
   `;
 }

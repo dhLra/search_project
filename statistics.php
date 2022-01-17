@@ -282,7 +282,8 @@ function providerWithContractByUF($uf) {
     $sql = '
         SELECT
             f.nome AS nome,
-            f.cnpj AS cnpj
+            f.cnpj AS cnpj,
+            f.id_fornecedor AS id
         FROM tabela_circuito AS tc
         INNER JOIN tabela_ponto AS tp
             ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
@@ -304,7 +305,8 @@ function providerWithContractByRegion($region) {
     $sql = '
         SELECT
             f.nome AS nome,
-            f.cnpj AS cnpj
+            f.cnpj AS cnpj,
+            f.id_fornecedor AS id
         FROM tabela_circuito AS tc
         INNER JOIN tabela_ponto AS tp
             ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
@@ -327,7 +329,8 @@ function providerWithContractByCity($city) {
     $sql = '
         SELECT
             f.nome AS nome,
-            f.cnpj AS cnpj
+            f.cnpj AS cnpj,
+            f.id_fornecedor AS id
         FROM tabela_circuito AS tc
         INNER JOIN tabela_ponto AS tp
             ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
@@ -349,7 +352,8 @@ function providerWithContract() {
     $sql = '
         SELECT
             f.nome AS nome,
-            f.cnpj AS cnpj
+            f.cnpj AS cnpj,
+            f.id_fornecedor AS id
         FROM tabela_circuito AS tc
         INNER JOIN tabela_ponto AS tp
             ON tc.id_ponto_a = tp.id_ponto OR tc.id_ponto_b = tp.id_ponto
