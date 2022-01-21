@@ -169,8 +169,8 @@
         </div>
     </div>
 
-    <footer class="container mt-4">
-    </footer>
+
+      <?php include_once "footer.php" ?>
 </body>
 
 <script>

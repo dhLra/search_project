@@ -593,7 +593,7 @@ function updateHomologatedProvidersStatistics() {
 
 function setupCharts() {
   Chart.defaults.color = "#fff";
-  Chart.defaults.borderColor = "#B2ABAC";
+  Chart.defaults.borderColor = "#fff";
 
   initProviderChart();
   initActiveCircuitChart();

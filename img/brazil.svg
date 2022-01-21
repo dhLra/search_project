@@ -7,8 +7,9 @@
 <style type="text/css">
 	.st0{fill:#606060;}
 	/*.st0{fill:rgba(0,0,0,0);}*/
-	.st1{fill:#E56910;stroke:#948082;}
-	.st2{fill:#FFFFFF;stroke:#948082;}
+	/* .st1{fill:#FE6B01;stroke:#c3c3c3;} */
+  .st1{fill:#FF8B00;stroke:#948082;}
+	.st2{fill:#FFFFFF;stroke:#c3c3c3;}
 </style>
 <sodipodi:namedview  bordercolor="#666666" borderopacity="1" fit-margin-bottom="0" fit-margin-left="0" fit-margin-right="0" fit-margin-top="0" gridtolerance="10" guidetolerance="10" id="namedview4250" inkscape:current-layer="svg4248" inkscape:cx="268.84726" inkscape:cy="266.87594" inkscape:pageopacity="0" inkscape:pageshadow="2" inkscape:window-height="823" inkscape:window-maximized="1" inkscape:window-width="1440" inkscape:window-x="0" inkscape:window-y="24" inkscape:zoom="1.1240921" objecttolerance="10" pagecolor="#ffffff" showgrid="false">
 	</sodipodi:namedview>

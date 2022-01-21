@@ -26,7 +26,7 @@ function formatTelephone($tel) {
         <div class="row justify-content-center aling-itens-center">
             <div class="col-4" style="text-align: right;">
                 <a href="/">
-                    <img src="img/logo_3.png" alt="" style="max-width: 100%;">
+                    <img src="img/logo_1.png" alt="" style="max-width: 100%;">
                 </a>
             </div>
             <!--div class="col-8 d-flex align-items-center">
