@@ -1,0 +1,2 @@
+* se não tiver telefone na planilha, pega no ada
+  * adicionar essa informação nos resultados de pesquisa (LIDERI)

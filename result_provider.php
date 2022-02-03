@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . "/database.php";
+require __DIR__ . "/external_data.php";
 
 $sth = $conn->prepare('SELECT * FROM `provedores` WHERE `id` = :nome');
 $sth->bindParam(':nome', $_POST['provider']);
@@ -9,6 +10,11 @@ $result = $sth->fetch(PDO::FETCH_ASSOC);
 function formatTelephone($tel) {
     return preg_replace("/[^0-9]/", "", $tel);
 }
+
+$upstreams = searchASNUpstreams($result["ASN"]);
+sleep(1);
+$ixs = searchASNIXs($result["ASN"]);
+sleep(2);
 
 ?>
 
@@ -27,7 +33,6 @@ function formatTelephone($tel) {
 </head>
 
 <body>
-
     <?php include_once "header.php" ?>
 
     <div class="container">
@@ -185,8 +190,65 @@ function formatTelephone($tel) {
                                 </a>
                             </td>
                         </tr>
+
+                        <?php if ($upstreams): ?>
+                            <?php $i = 0; foreach ($upstreams['ipv4_upstreams'] as $upstream): $i++ ?>
+                                <tr>
+                                    <th scope="row">Upstream IPV4 <?php echo $i ?></th>
+                                    <td>
+                                        <label>Nome: <?php echo $upstream['name'] ?></label><br />
+                                        <label>ASN: <?php echo $upstream['asn'] ?></label><br />
+                                        <label>País: <?php echo $upstream['country_code'] ?></label>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+
+                            <?php $i = 0; foreach ($upstreams['ipv6_upstreams'] as $upstream): $i++ ?>
+                                <tr>
+                                    <th scope="row">Upstream IPV6 <?php echo $i ?></th>
+                                    <td>
+                                        <label>Nome: <?php echo $upstream['name'] ?></label><br />
+                                        <label>ASN: <?php echo $upstream['asn'] ?></label><br />
+                                        <label>País: <?php echo $upstream['country_code'] ?></label>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        <?php endif ?>
+
+                        <?php if ($ixs): ?>
+                            <?php $i = 0; foreach ($ixs as $ix): $i++ ?>
+                                <tr>
+                                    <th scope="row">IX <?php echo $i ?></th>
+                                    <td>
+                                        <label>Nome: <?php echo $ix['name'] ?></label><br />
+                                        <label>IPV4: <?php echo $ix['ipv4_address'] ?></label><br />
+                                        <?php if ($ix['ipv6_address']): ?>
+                                            <label>IPV6: <?php echo $ix['ipv6_address'] ?></label><br />
+                                        <?php endif ?>
+                                        <label>País: <?php echo $ix['country_code'] ?></label><br />
+                                        <label>Velocidade: <?php echo $ix['speed'] ?></label>
+                                    </td>
+                                </tr>
+                            <?php endforeach ?>
+                        <?php endif ?>
                     </tbody>
                 </table>
+
+                <?php if ($upstreams): ?>
+                    <div class="container">
+                        <div>
+                            <label for="ipv4-graph">Gráfico upstream IPV4</label>
+                            <img id="ipv4-graph" style="width: 100%;" src="<?php echo $upstreams['ipv4_graph']; ?>" />
+                        </div>
+
+                        <?php if ($upstreams['ipv6_graph']): ?>
+                            <div class="mt-2">
+                                <label for="ipv6-graph">Gráfico upstream IPV6</label>
+                                <img id="ipv6-graph" style="width: 100%;" src="<?php echo $upstreams['ipv6_graph']; ?>" />
+                            </div>
+                        <?php endif ?>
+                    </div>
+                <?php endif ?>
             </div>
         </div>
         <div class="col col-sm-1 col-md-2"></div>

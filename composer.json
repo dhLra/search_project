@@ -1,0 +1,25 @@
+{
+    "name": "fbr/turing",
+    "description": "Sistema de pesquisa de provedores.",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "license": "Copyrighted",
+    "autoload": {
+        "psr-4": {
+            "Fbr\\Turing\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jefferson Julio",
+            "email": "snhr.jj@gmail.com"
+        }
+    ],
+    "config": {
+        "platform": {
+            "php": "7.3"
+        }
+    }
+}
