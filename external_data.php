@@ -7,7 +7,7 @@ use GuzzleHttp\Client;
 function searchASNUpstreams($asn) {
     try {
         $client = new Client([
-                'base_uri' => 'https://api.bgpview.io/',
+            'base_uri' => 'https://api.bgpview.io/',
         ]);
 
         $response = $client->request('GET', "/asn/$asn/upstreams");
@@ -27,7 +27,7 @@ function searchASNUpstreams($asn) {
 function searchASNIXs($asn) {
     try {
         $client = new Client([
-                'base_uri' => 'https://api.bgpview.io/',
+            'base_uri' => 'https://api.bgpview.io/',
         ]);
 
         $response = $client->request('GET', "/asn/$asn/ixs");
