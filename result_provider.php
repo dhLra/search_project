@@ -13,8 +13,16 @@ function formatTelephone($tel) {
 
 $upstreams = searchASNUpstreams($result["ASN"]);
 sleep(1);
+
+if ($upstreams) {
+    $graph4 = file_get_contents($upstreams['ipv4_graph']);
+    sleep(1);
+
+    $graph6 = file_get_contents($upstreams['ipv6_graph']);
+    sleep(1);
+}
+
 $ixs = searchASNIXs($result["ASN"]);
-sleep(2);
 
 ?>
 
@@ -238,13 +246,17 @@ sleep(2);
                     <div class="container">
                         <div>
                             <label for="ipv4-graph">Gráfico upstream IPV4</label>
-                            <img id="ipv4-graph" style="width: 100%;" src="<?php echo $upstreams['ipv4_graph']; ?>" />
+                            <div class="graph-img" id="ipv4-graph">
+                                <?php echo $graph4; ?>
+                            </div>
                         </div>
 
                         <?php if ($upstreams['ipv6_graph']): ?>
                             <div class="mt-2">
                                 <label for="ipv6-graph">Gráfico upstream IPV6</label>
-                                <img id="ipv6-graph" style="width: 100%;" src="<?php echo $upstreams['ipv6_graph']; ?>" />
+                                <div class="graph-img" id="ipv6-graph">
+                                    <?php echo $graph6; ?>
+                                </div>
                             </div>
                         <?php endif ?>
                     </div>
@@ -254,6 +266,17 @@ sleep(2);
         <div class="col col-sm-1 col-md-2"></div>
         <div class="col col-sm-1 col-md-1"></div>
     <div>
+
+    <style>
+        .graph-img {
+            width: 100%;
+        }
+
+        .graph-img svg {
+            width: 100%;
+            height: auto;
+        }
+    </style>
 
     <footer class="mt-4"></footer>
 </body>
