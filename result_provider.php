@@ -199,10 +199,30 @@ $ixs = searchASNIXs($result["ASN"]);
                             </td>
                         </tr>
 
-                        <?php if ($upstreams): ?>
+                        <?php if (strlen($result['ips']) > 2); ?>
+                            <?php $i = 0; foreach(explode(",", $result['ips']) as $ip): ?>
+                                <?php
+                                    if (strlen($ip) <= 1) {
+                                        continue;
+                                    }
+
+                                    $i++;
+                                ?>
+                                <tr>
+                                    <th scope="row">Prefixo <?php echo $i ?>:</th>
+                                    <td><?php echo $ip; ?></td>
+                                </tr>
+                            <?php endforeach ?>
+                        <? endif ?>
+                    </tbody>
+                </table>
+
+                <?php if ($upstreams): ?>
+                    <table class="mt-4 bgp-data">
+                        <tbody>
                             <?php $i = 0; foreach ($upstreams['ipv4_upstreams'] as $upstream): $i++ ?>
                                 <tr>
-                                    <th scope="row">Upstream IPV4 <?php echo $i ?></th>
+                                    <th scope="row">Upstream IPV4 <?php echo $i ?>:</th>
                                     <td>
                                         <label>Nome: <?php echo $upstream['name'] ?></label><br />
                                         <label>ASN: <?php echo $upstream['asn'] ?></label><br />
@@ -213,7 +233,7 @@ $ixs = searchASNIXs($result["ASN"]);
 
                             <?php $i = 0; foreach ($upstreams['ipv6_upstreams'] as $upstream): $i++ ?>
                                 <tr>
-                                    <th scope="row">Upstream IPV6 <?php echo $i ?></th>
+                                    <th scope="row">Upstream IPV6 <?php echo $i ?>:</th>
                                     <td>
                                         <label>Nome: <?php echo $upstream['name'] ?></label><br />
                                         <label>ASN: <?php echo $upstream['asn'] ?></label><br />
@@ -221,12 +241,16 @@ $ixs = searchASNIXs($result["ASN"]);
                                     </td>
                                 </tr>
                             <?php endforeach ?>
-                        <?php endif ?>
+                        </tbody>
+                    </table>
+                <?php endif ?>
 
-                        <?php if ($ixs): ?>
+                <?php if ($ixs): ?>
+                    <table class="mt-4 bgp-data">
+                        <tbody>
                             <?php $i = 0; foreach ($ixs as $ix): $i++ ?>
                                 <tr>
-                                    <th scope="row">IX <?php echo $i ?></th>
+                                    <th scope="row">IX <?php echo $i ?>:</th>
                                     <td>
                                         <label>Nome: <?php echo $ix['name'] ?></label><br />
                                         <label>IPV4: <?php echo $ix['ipv4_address'] ?></label><br />
@@ -238,12 +262,12 @@ $ixs = searchASNIXs($result["ASN"]);
                                     </td>
                                 </tr>
                             <?php endforeach ?>
-                        <?php endif ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                <?php endif ?>
 
                 <?php if ($upstreams): ?>
-                    <div class="container">
+                    <div class="container mt-4 text-center">
                         <div>
                             <label for="ipv4-graph">Gráfico upstream IPV4</label>
                             <div class="graph-img" id="ipv4-graph">
@@ -275,6 +299,20 @@ $ixs = searchASNIXs($result["ASN"]);
         .graph-img svg {
             width: 100%;
             height: auto;
+        }
+
+        .bgp-data, .prefixes {
+            width: 100%;
+        }
+        .bgp-data tr:not(:last-child) {
+            border-bottom: 1px solid;
+        }
+        .bgp-data td {
+            padding-left: 10px;
+        }
+
+        svg {
+            pointer-events: none;
         }
     </style>
 
