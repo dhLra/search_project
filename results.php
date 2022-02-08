@@ -1,4 +1,6 @@
 <?php
+require __DIR__ . '/auth.php';
+
 function formatTelephone($tel) {
     return preg_replace("/[^0-9]/", "", $tel);
 }

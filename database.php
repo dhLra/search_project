@@ -59,3 +59,21 @@ function getAllProvidersRazaoSocial() {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+
+function logUser($username, $password) {
+    global $conn;
+
+    $stmt = $conn->prepare('SELECT * FROM `turing_usuario` WHERE login = :login');
+    $stmt->bindParam(":login", $username);
+    $stmt->execute();
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        if (password_verify($password, $user['senha'])) {
+            return $user;
+        }
+    }
+
+    return false;
+}

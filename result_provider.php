@@ -1,4 +1,6 @@
 <?php
+require __DIR__ . '/auth.php';
+
 require __DIR__ . "/database.php";
 require __DIR__ . "/external_data.php";
 
