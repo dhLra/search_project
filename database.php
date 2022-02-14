@@ -1,8 +1,8 @@
 <?php
 $hostName = "database";
 $dbName = "provedores";
-$dbLogin = "mvp";
-$dbPass = "fir3link4";
+$dbLogin = "root";
+$dbPass = "GDS3243!sdfN";
 
 try {
     $conn = new pdo('mysql:host=' . $hostName . '; dbname=' . $dbName, $dbLogin, $dbPass);

@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/auth.php';
-
 require __DIR__ . "/database.php";
 require __DIR__ . "/external_data.php";
 
@@ -36,8 +35,8 @@ $ixs = searchASNIXs($result["ASN"]);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/custom.css">
 
     <title>Resultado do Provedor</title>
 </head>
@@ -49,7 +48,7 @@ $ixs = searchASNIXs($result["ASN"]);
         <div class="row justify-content-center aling-itens-center">
             <div class="col-4" style="text-align: right;">
                 <a href="/">
-                    <img src="img/logo_1.png" alt="" style="max-width: 100%;">
+                    <img src="./img/FBR_logo.png" alt="" style="max-width: 100%;">
                 </a>
             </div>
             <div class="col-8 d-flex align-items-center">
@@ -60,8 +59,8 @@ $ixs = searchASNIXs($result["ASN"]);
         </div>
     </div>
 
-    <div class="row container">
-        <div class="col col-sm-1 col-md-1"></div>
+    <div class="container">
+        <div class="row justify-content-center">
         <div class="col col-sm-11 col-md-8">
             <div class="container bg-light rounded provider-info pt-3 pb-3">
                 <table>
@@ -218,7 +217,6 @@ $ixs = searchASNIXs($result["ASN"]);
                         <? endif ?>
                     </tbody>
                 </table>
-
                 <?php if ($upstreams): ?>
                     <table class="mt-4 bgp-data">
                         <tbody>
@@ -289,10 +287,8 @@ $ixs = searchASNIXs($result["ASN"]);
                 <?php endif ?>
             </div>
         </div>
-        <div class="col col-sm-1 col-md-2"></div>
-        <div class="col col-sm-1 col-md-1"></div>
+        </div>
     <div>
-
     <style>
         .graph-img {
             width: 100%;

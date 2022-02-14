@@ -1,0 +1,56 @@
+body,html{
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  min-height: 100vh;
+}
+
+body {
+  background-image: url(../img/background_full.png); 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+}
+@media screen and (max-width: 701px) {
+  body {
+    background-position: 0px 60px;
+    background-size: 200%;
+  }
+}
+input, button{
+  border-radius: 24px !important;
+}
+
+.btn:not(.normal) {
+    /* background-color: #FE6B01; */
+    /* border-color: #FE6B01; */
+    background-color: #E56910;
+    border-color: #E56910;
+    margin-top: 2%;
+}
+.btn:not(.normal):hover{
+    background-color: #E56910;
+    border-color: #E56910;
+}
+
+.btn:not(.normal):active{
+    background-color: #E56910;
+}
+
+::-webkit-scrollbar{
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb{
+  /* background: #FE6B01; */
+  background: #FF8B00;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover{
+  background: #B3AFB3;
+}
+::-webkit-scrollbar-track{
+  background: #FFFFFF;
+  border-radius: 0px;
+  box-shadow: inset 0px 0px 0px 0px #F0F0F0;
+}
