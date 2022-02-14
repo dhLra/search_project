@@ -112,22 +112,22 @@ function highlightRegion(region) {
   })
 
   SVG_REGIAO[region].forEach(function (item) {
-    let regiaoEl = document.querySelector("#"+item);
+    let regiaoEl = document.querySelector("#" + item);
     svgz_element(regiaoEl).toTop();
   });
 
-  setTimeout(function() {
-      SVG_REGIAO[region].forEach(function (item) {
-        let regiaoEl = document.querySelector("#"+item);
-        let ufElComplement = null;
+  setTimeout(function () {
+    SVG_REGIAO[region].forEach(function (item) {
+      let regiaoEl = document.querySelector("#" + item);
+      let ufElComplement = null;
 
-        if (UF_COMPLEMENTS[item]) {
-          ufElComplement = document.querySelector("#" + UF_COMPLEMENTS[item]);
-          ufElComplement.classList.add("highlighted");
-        }
+      if (UF_COMPLEMENTS[item]) {
+        ufElComplement = document.querySelector("#" + UF_COMPLEMENTS[item]);
+        ufElComplement.classList.add("highlighted");
+      }
 
-        regiaoEl.classList.add("highlighted");
-      });
+      regiaoEl.classList.add("highlighted");
+    });
   }, 50);
 }
 
@@ -140,7 +140,7 @@ function highlightState(uf) {
     node.classList.add("in_highlight");
   })
 
-  let ufEl = document.querySelector("#"+SVG_UF[uf]);
+  let ufEl = document.querySelector("#" + SVG_UF[uf]);
   let ufElComplement = null;
 
   if (UF_COMPLEMENTS[SVG_UF[uf]]) {
@@ -152,7 +152,7 @@ function highlightState(uf) {
     svgz_element(ufElComplement).toTop();
   }
 
-  setTimeout(function() {
+  setTimeout(function () {
     ufEl.classList.add("highlighted");
     if (ufElComplement) {
       ufElComplement.classList.add("highlighted");
@@ -184,19 +184,19 @@ window.addEventListener('load', function () {
   let stateSelect = document.querySelector("select[name=uf]");
   let cityInput = document.querySelector("input[name=cidade]");
 
-  regionSelect.addEventListener("change", function(event) {
+  regionSelect.addEventListener("change", function (event) {
     dehighlightPaths();
     highlightRegion(event.target.value);
     stateSelect.value = "";
   });
 
-  stateSelect.addEventListener("change", function(event) {
+  stateSelect.addEventListener("change", function (event) {
     dehighlightPaths();
     highlightState(event.target.value);
     regionSelect.value = "";
   });
 
-  cityInput.addEventListener("change", function(event) {
+  cityInput.addEventListener("change", function (event) {
     let state = findCity(event.target.value).estado;
     if (state) {
       dehighlightPaths();
@@ -212,10 +212,10 @@ window.addEventListener('load', function () {
   highlightState(stateSelect.value);
 
 
-  Object.keys(SVG_UF).forEach(function(uf) {
+  Object.keys(SVG_UF).forEach(function (uf) {
     let ufCell = document.querySelector("#" + SVG_UF[uf]);
 
-    ufCell.addEventListener("click", function() {
+    ufCell.addEventListener("click", function () {
       stateSelect.value = uf;
       regionSelect.value = "";
       dehighlightPaths();
@@ -225,7 +225,7 @@ window.addEventListener('load', function () {
 
     if (UF_COMPLEMENTS[SVG_UF[uf]]) {
       let ufCellComplement = document.querySelector("#" + UF_COMPLEMENTS[SVG_UF[uf]]);
-      ufCellComplement.addEventListener("click", function() {
+      ufCellComplement.addEventListener("click", function () {
         stateSelect.value = uf;
         regionSelect.value = "";
         dehighlightPaths();
@@ -236,19 +236,19 @@ window.addEventListener('load', function () {
   });
 
   // Async data requests
-  stateSelect.addEventListener("change", function(event) {
+  stateSelect.addEventListener("change", function (event) {
     if (!event.target.value) return;
 
     updateUFStatistics(event.target.value);
   });
 
-  regionSelect.addEventListener("change", function(event) {
+  regionSelect.addEventListener("change", function (event) {
     if (!event.target.value) return;
 
     updateRegionStatistics(event.target.value);
   });
 
-  cityInput.addEventListener("change", function(event) {
+  cityInput.addEventListener("change", function (event) {
     updateCityStatistics(event.target.value);
   });
 
@@ -373,7 +373,7 @@ function updateActiveCircuitCityStatistics() {
         circuits.map(function (a) {
           return a.circuitos;
         }
-      ));
+        ));
 
       disableLoader("active-circuit-chart-loader");
     });
@@ -401,7 +401,7 @@ function updateActiveCircuitCityRegionStatistics(region) {
         circuits.map(function (a) {
           return a.circuitos;
         }
-      ));
+        ));
       disableLoader("active-circuit-chart-loader");
     });
   });
@@ -429,7 +429,7 @@ function updateActiveCircuitCityUfStatistics(uf) {
         circuits.map(function (a) {
           return a.circuitos;
         }
-      ));
+        ));
       disableLoader("active-circuit-chart-loader");
     });
   });
@@ -455,7 +455,7 @@ function updateCoverageAreaStatistics() {
         cities.map(function (a) {
           return a.fornecedores;
         }
-      ));
+        ));
       disableLoader("area-coverage-chart-loader");
     });
   });
@@ -482,7 +482,7 @@ function updateCoverageAreaRegionStatistics(region) {
         cities.map(function (a) {
           return a.fornecedores;
         }
-      ));
+        ));
       disableLoader("area-coverage-chart-loader");
     });
   });
@@ -509,7 +509,7 @@ function updateCoverageAreaUFStatistics(uf) {
         cities.map(function (a) {
           return a.fornecedores;
         }
-      ));
+        ));
       disableLoader("area-coverage-chart-loader");
     });
   });
@@ -592,8 +592,8 @@ function updateHomologatedProvidersStatistics() {
 }
 
 function setupCharts() {
-  Chart.defaults.color = "#fff";
-  Chart.defaults.borderColor = "#fff";
+  Chart.defaults.color = "#000000";
+  Chart.defaults.borderColor = "#000000";
 
   initProviderChart();
   initActiveCircuitChart();
@@ -726,8 +726,8 @@ function updateHomologatedProvidersList(providers) {
 
   el.innerHTML = `
     ${providers.map(function (p) {
-      if ((p.cnpj+"").length > 1 && p.cnpj != null) {
-          return `<li>
+    if ((p.cnpj + "").length > 1 && p.cnpj != null) {
+      return `<li>
           <form action="/connection.php" method="POST" target="_blank">
             <input type="hidden" name="cnpj" value="${p.cnpj}" />
             <input type="hidden" name="id_ada" value="${p.id}" />
@@ -736,8 +736,8 @@ function updateHomologatedProvidersList(providers) {
             </button>
           </form>
         </li>`;
-      }
-      return `<li>
+    }
+    return `<li>
           <form action="/connection.php" method="POST" target="_blank">
             <input type="hidden" name="ada_query" value="1" />
             <input type="hidden" name="id_ada" value="${p.id}" />
@@ -746,6 +746,6 @@ function updateHomologatedProvidersList(providers) {
             </button>
           </form>
       </li>`;
-    }).join(' ')}
+  }).join(' ')}
   `;
 }

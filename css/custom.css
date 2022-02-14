@@ -1,27 +1,30 @@
-body,html{
+body,
+html {
   margin: 0;
   padding: 0;
   font-size: 16px;
   min-height: 100vh;
   /* background:#5E5E5E; */
   /* background-color: #948082; */
-  background-color: #c3c3c3;
+  background-color: #ffffff;
 }
 
-body {
-  /* background-image: url(/img/mapa.png); */
-  background-repeat: no-repeat;
-  background-position: 95% 100px;
-  background-size: 40%;
-}
 @media screen and (max-width: 701px) {
   body {
     background-position: 0px 60px;
     background-size: 200%;
   }
 }
+input{
+  background-color: #C4C4C4;
+}
 
-input, button, select, .card, .list-wrapper, .rounded {
+input,
+button,
+select,
+.card,
+.list-wrapper,
+.rounded {
   border-radius: 24px !important;
 }
 
@@ -77,7 +80,7 @@ canvas:not(.portrait) {
 
 .navbar {
   padding: 0px;
-  min-height: 28px;
+  min-height: 55px;
 }
 
 .nav-link {
@@ -90,17 +93,17 @@ canvas:not(.portrait) {
   display: inline-block;
 }
 .nav-link i::before {
-  color: #fff;
-  font-size: 1.4rem;
+  color: #E56910;
+  font-size: 1.7rem;
 }
 
 .nav-link:hover i::before {
-  color: #0d6efd;
+  color: #ffffff;
 }
 
 .navbar, .provedores thead {
   /* background-color: #FE6B01; */
-  background-color: #FF8B00;
+  background-color: #C4C4C4;
 }
 
 .loader-parent.active {
@@ -108,7 +111,7 @@ canvas:not(.portrait) {
   min-height: 200px;
 }
 .loader-parent.active::before {
-  content: ' ';
+  content: " ";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -117,11 +120,10 @@ canvas:not(.portrait) {
   background-color: #c3c3c3b8;
 }
 
-
 .loader-parent.active .loader {
   border: 8px solid #f3f3f3;
   /* border-top: 8px solid #FE6B01; */
-  border-top: 8px solid #FF8B00;
+  border-top: 8px solid #ff8b00;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -132,16 +134,16 @@ canvas:not(.portrait) {
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.front-form{
-    padding-top: 60px;
-}
+.front-form [type="submit"] {
 
-.front-form [type=submit] {
-  background-image: linear-gradient(45deg, #ffffff80, transparent);
   border-width: 0px;
 }
 
@@ -173,24 +175,24 @@ canvas:not(.portrait) {
 }
 
 .btn:not(.normal) {
-    /* background-color: #FE6B01; */
-    /* border-color: #FE6B01; */
-    background-color: #FF8B00;
-    border-color: #FF8B00;
-    margin-top: 2%;
+  /* background-color: #FE6B01; */
+  /* border-color: #FE6B01; */
+  background-color: #E56910;
+  border-color: #E56910;
+  margin-top: 2%;
 }
-.btn:not(.normal):hover{
-    background-color: orange;
-    border-color: orange;
-}
-
-.btn:not(.normal):active{
-    background-color: orange;
+.btn:not(.normal):hover {
+  background-color: orange;
+  border-color: orange;
 }
 
-.result{
-    height: 100px;
-    padding-top: 65px;
+.btn:not(.normal):active {
+  background-color: orange;
+}
+
+.result {
+  height: 100px;
+  padding-top: 65px;
 }
 
 .statistics {
@@ -239,17 +241,17 @@ canvas:not(.portrait) {
   border-radius: 24px;
 }
 
-.provedores th{
+.provedores th {
   text-align: center;
   border-width: 0px;
   color: #fff;
 }
 
-.provedores td{
+.provedores td {
   padding: 0;
 }
 
-.provedores td button{
+.provedores td button {
   padding: 5px;
   text-align: center;
   width: 100%;
@@ -292,28 +294,28 @@ canvas:not(.portrait) {
   display: inline-block;
 }
 
-.provedores thead th[order=asc]::after {
+.provedores thead th[order="asc"]::after {
   transform: rotate(-90deg);
 }
 
-.provedores thead th[order=desc]::after {
+.provedores thead th[order="desc"]::after {
   transform: rotate(90deg);
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   /* background: #FE6B01; */
-  background: #FF8B00;
+  background: #ff8b00;
   border-radius: 0px;
 }
-::-webkit-scrollbar-thumb:hover{
-  background: #B3AFB3;
+::-webkit-scrollbar-thumb:hover {
+  background: #b3afb3;
 }
-::-webkit-scrollbar-track{
-  background: #FFFFFF;
+::-webkit-scrollbar-track {
+  background: #ffffff;
   border-radius: 0px;
-  box-shadow: inset 0px 0px 0px 0px #F0F0F0;
+  box-shadow: inset 0px 0px 0px 0px #f0f0f0;
 }

@@ -5,14 +5,13 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "8000:80"
+      - "127.0.0.1:8080:80"
     volumes:
       - ./docker/etc/apache2/sites-enabled/:/etc/apache2/sites-enabled/
       - ./docker/etc/apache2/envvars:/etc/apache2/envvars
       - ./docker/etc/php/7.3/apache2/php.ini:/etc/php/7.3/apache2/php.ini
       - ./:/app/code/
       - ./docker/logs/:/app/logs/
-      - /etc/localtime:/etc/localtime:ro
     stdin_open: true
     tty: true
     depends_on:
