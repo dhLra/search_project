@@ -43,7 +43,7 @@ function formatTelephone($tel)
                     <table class="table bg-light provedores" style="overflow: hidden">
                         <thead>
                             <tr>
-                                <th scope="col" style="width: 50%;" <?php if ($_POST["order_by"] == "nome") {
+                                <th scope="col-6" style="width: 50%;" <?php if ($_POST["order_by"] == "nome") {
                                                                         echo "order='$order_by_direction_invertion'";
                                                                     }
                                                                     ?>>
@@ -54,7 +54,7 @@ function formatTelephone($tel)
                                     </form>
                                     Nome Fantasia
                                 </th>
-                                <th scope="col" style="width: 30%;" <?php
+                                <th style="padding-right: 60px" scope="col-3" style="width: 30%;" <?php
                                                                     if ($_POST["order_by"] == "cidade") {
                                                                         echo "order='$order_by_direction_invertion'";
                                                                     }
@@ -66,7 +66,7 @@ function formatTelephone($tel)
                                     </form>
                                     Municipio / UF
                                 </th>
-                                <th scope="col" style="width: 20%;" <?php
+                                <th style="padding-right: 65px" scope="col-3" style="width: 20%;" <?php
                                                                     if ($_POST["order_by"] == "telefone") {
                                                                         echo "order='$order_by_direction_invertion'";
                                                                     }
@@ -81,7 +81,7 @@ function formatTelephone($tel)
                             </tr>
                         </thead>
                     </table>
-                    
+
 
                     <table class="provedores">
                         <tbody>
@@ -104,12 +104,10 @@ function formatTelephone($tel)
                                             </a>
                                         </td>
                                     <?php else : ?>
-                                        <div class="row">
                                             <form action="./result_provider.php" method="post" target="_blank">
                                                 <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
-                                                <button type="submit" class="normal btn btn-light btn-link mb-3 text-start" style="background-color: #E5E5E5;"><?php echo $row['Nome_Fantasia'] . ' | '. $row['Municipio'] . ' / '. $row['UF_Sede'] . ' | ' . formatTelephone($row['Telefone_Principal']);?></button>
+                                                <button type="submit" class="normal btn btn-light btn-link mb-3 text-center" style="background-color: #E5E5E5; display: flex"><?php echo '<div class="col-6">'. $row['Nome_Fantasia'] . '</div>' . '<div class="col-3">'. $row['Municipio'] . ' - ' . $row['UF_Sede'] . '</div>' . '<div class="col-3">'.formatTelephone($row['Telefone_Principal']) . '</div>';  ?></button>
                                             </form>
-                                    </div>
                                     <?php endif ?>
                                 </tr>
                             <?php endforeach ?>

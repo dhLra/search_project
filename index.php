@@ -168,11 +168,9 @@ require __DIR__ . '/statistics.php';
                         <h5 class="card-title">Total de <wbr />provedores: <wbr /><span id="provider-total"></span></h5>
                     </div>
                 </div>
-            </div>
-            <div class="col-2" id="second-provider-total-card">
-                <div class="card">
+                <div class="card mt-2" id="second-provider-total-card" style="visibility: hidden">
                     <div class="card-body">
-                        <h5 class="card-title"><span id="second-provider-total"></span></h5>
+                        <h5 class="card-title "><span id="second-provider-total"></span></h5>
                     </div>
                 </div>
             </div>
