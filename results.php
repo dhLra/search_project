@@ -106,7 +106,7 @@ function formatTelephone($tel)
                                     <?php else : ?>
                                             <form action="./result_provider.php" method="post" target="_blank">
                                                 <input type="hidden" name="provider" value="<?php echo $row['id']; ?>" />
-                                                <button type="submit" class="normal btn btn-light btn-link mb-3 text-center" style="background-color: #E5E5E5; display: flex"><?php echo '<div class="col-6">'. $row['Nome_Fantasia'] . '</div>' . '<div class="col-3">'. $row['Municipio'] . ' - ' . $row['UF_Sede'] . '</div>' . '<div class="col-3">'.formatTelephone($row['Telefone_Principal']) . '</div>';  ?></button>
+                                                <button type="submit" class="normal btn btn-light mb-3 text-center" style="background-color: #E5E5E5; display: flex"><?php echo '<div class="col-6">'. $row['Nome_Fantasia'] . '</div>' . '<div class="col-3">'. $row['Municipio'] . ' - ' . $row['UF_Sede'] . '</div>' . '<div class="col-3">'.formatTelephone($row['Telefone_Principal']) . '</div>';  ?></button>
                                             </form>
                                     <?php endif ?>
                                 </tr>
